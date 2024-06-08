@@ -1,0 +1,54 @@
+
+{% extends "app_travel/.base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title_tab %} Đăng Nhập {% endblock %}
+
+{% block main_content %}
+
+    <!-- Header Start -->
+    
+
+
+    <!-- Contact Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="text-center mb-3 pb-3">
+                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Contact</h6>
+                <h1>Đăng Nhập</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="contact-form bg-white" style="padding: 30px;">
+                        <div > {{result_login|safe}}</div>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-row pb-3">
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control p-4" name="username" placeholder="Tên Đăng Nhập/Email">
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control p-4" name="password" placeholder="password">
+                                </div>
+                                
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-primary py-3 px-4" type="submit" name="btnDangnhap" value="Đăng Nhập"> Đăng Nhập</button>
+                            </div>
+                        </form>
+                        <div class="text-center mt-3 pt-3">
+                            <div class="row justify-content-center">
+                                <div >Chưa có tài khoản?</div>
+                                <div style="padding-left: 10px;"><a href="{% url 'app_user:register' %}"> Tạo tài khoản </a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+{% endblock %}
+ 

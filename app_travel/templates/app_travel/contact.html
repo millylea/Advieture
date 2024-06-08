@@ -1,0 +1,54 @@
+
+{% extends "app_travel/.base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title_tab %} Liên Hệ {% endblock %}
+
+{% block main_content %}
+   
+
+
+
+
+    <!-- Contact Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="text-center mb-3 pb-3">
+                <div>Để có thể đáp ứng được các yêu cầu và các ý kiến đóng góp của quý vị một cách nhanh chóng xin vui lòng liên hệ</div>
+                <h4 class="text-primary mt-5">Nhập thông tin</h4>
+               
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="contact-form bg-white" style="padding: 30px;">
+                        
+                        {{result_contact|safe}}
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 pb-3">
+                                    <input type="text" class="form-control" placeholder="Họ Tên" name="name">
+                                </div>
+                                <div class="col-md-6 pb-3">
+                                    <input type="text" class="form-control" placeholder="Điện Thoại" name="phone">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Email" name="email">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Tiêu Đề" name="subject">
+                            </div>
+                            <div class="form-group">
+                                <textarea type="text" rows="5" class="form-control" placeholder="Nội dung" name="message"></textarea>
+                            </div>
+                            <div  class="text-center"><button class="btn-primary py-3 px-4" name="btnGuiThongtin" type="submit" value="Gửi"> Gửi đi</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+{% endblock %}

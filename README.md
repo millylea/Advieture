@@ -1,2 +1,3 @@
-# app_travel
+# Travel web app
+
 Django travel app

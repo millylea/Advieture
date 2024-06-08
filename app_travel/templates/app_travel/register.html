@@ -1,0 +1,81 @@
+
+{% extends "app_travel/.base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title_tab %} Đăng ký {% endblock %}
+
+{% block main_content %}
+
+    <!-- Header Start -->
+    
+
+
+    <!-- Contact Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="text-center mb-3 pb-3">
+                <h1>Tạo Tài Khoản</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="register-form bg-white" style="padding: 30px;">
+                        <div id="success">{{result_register|safe}}</div>
+                        
+                        <form  method="post" >
+                            {% csrf_token %}
+                            <div class="row pb-2">
+                                <div class="col-sm-6">
+                                    {{ form_register.last_name }}
+                                </div>
+                                <div class="col-sm-6">
+                                    {{ form_register.first_name }}
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-sm-6">
+                                    {{ form_register.username }}
+                                </div>
+                                <div class="col-sm-6">
+                                    {{ form_register.phone }}
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-sm-12">
+                                    {{ form_register.email }}
+                                </div>
+                            </div>
+                   
+
+                            <div class="row pb-2">
+                                <div class="col-sm-12">
+                                    {{ form_register.password }}
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                      
+                                <div class="col-sm-12">
+                                    {{ form_register.confirm_password }}
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="text-center">
+                                <button class="btn btn-primary py-3 px-4" name="btnRegister" type="submit" value="Đăng Ký"> Đăng Ký</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="text-center mt-3 pt-3">
+                            <div class="row pb-2 justify-content-center">
+                                <div >Đã có tài khoản?</div>
+                                <div style="padding-left: 10px;"><a href=""> Đăng nhập </a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+{% endblock %}
+ 

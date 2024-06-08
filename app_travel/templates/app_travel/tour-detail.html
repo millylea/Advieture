@@ -1,0 +1,193 @@
+{% extends "app_travel/.base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title_tab %} Tour {% endblock %}
+
+{% block main_content %}
+
+
+
+
+
+<!-- Blog Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Blog Detail Start -->
+                <div class="pb-3">
+                        <h4 class="mb-3">{{tour_detail.name}}</h4>
+                        <div class="position-relative">
+                            <img class="img-fluid w-100" src="{{tour_detail.image.url}}" alt="{{tour_detail.name}}">
+                        </div>
+                    
+                    <div class="bg-white mb-3" style="padding: 30px;">
+                        
+                        <div>{{ schedule_html |safe }} </div>
+                    </div>
+                </div>
+                <!-- Blog Detail End -->
+
+                <!-- Comment List Start -->
+                <div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
+                    <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">3 Comments</h4>
+                    <div class="media mb-4">
+                        <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                        <div class="media-body">
+                            <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
+                            <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore
+                                accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.
+                                Gubergren clita aliquyam consetetur sadipscing, at tempor amet ipsum diam tempor
+                                consetetur at sit.</p>
+                            <button class="btn btn-sm btn-outline-primary">Reply</button>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                        <div class="media-body">
+                            <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
+                            <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore
+                                accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.
+                                Gubergren clita aliquyam consetetur sadipscing, at tempor amet ipsum diam tempor
+                                consetetur at sit.</p>
+                            <button class="btn btn-sm btn-outline-primary">Reply</button>
+                            <div class="media mt-4">
+                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                <div class="media-body">
+                                    <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
+                                    <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor
+                                        labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed
+                                        eirmod ipsum. Gubergren clita aliquyam consetetur sadipscing, at tempor amet
+                                        ipsum diam tempor consetetur at sit.</p>
+                                    <button class="btn btn-sm btn-outline-primary">Reply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Comment List End -->
+
+            </div>
+
+            <div class="col-lg-4 mt-5 mt-lg-0">
+                <!-- Booking -->
+                <div class="d-flex flex-column text-center bg-white mb-5 py-5 px-4">
+                    <div class="package-price mb-3">
+                        {{tour_detail.price|floatformat:0|intcomma}}<span>đ</span>
+                        
+                    </div>
+                    <div class="booking-button mb-3">
+                        <a> <button>Đặt Ngay</button></a>
+                    </div>
+                    <div>
+                        <a href=""> <button style="background-color: white;">Liên Hệ Tư Vấn</button> </a>
+                    </div>
+
+                </div>
+
+               
+
+                <!-- Category List -->
+                <div class="mb-5">
+                    <h4 class="mb-4">Thông Tin</h4>
+                    <div class="bg-white" style="padding: 30px;">
+                        <ul class="list-inline m-0">
+                            <li class="mb-3 d-flex justify-content-between align-items-center">
+                               <div><i class="fa fa-angle-right text-primary mr-2"></i>Khởi hành từ</div>
+                                <span style="font-weight: bold;">{{tour_detail.departure.name}}</span>
+                            </li>
+                            <li class="mb-3 d-flex justify-content-between align-items-center">
+                               <div><i class="fa fa-angle-right text-primary mr-2"></i>Ngày khởi hành</div>
+                                <span style="font-weight: bold;">150</span>
+                            </li>
+                            <li class="mb-3 d-flex justify-content-between align-items-center">
+                                <div ><i class="fa fa-angle-right text-primary mr-2"></i> Thời gian</div>
+                                <span style="font-weight: bold;">{{tour_detail.days}}</span>
+                            </li>
+                            <li class="mb-3 d-flex justify-content-between align-items-center">
+                                <div><i class="fa fa-angle-right text-primary mr-2"></i> Phương tiện</div>
+                                <span style="font-weight: bold;">{{tour_detail.transportation}}</span>
+                            </li>
+                            <li class="mb-3 d-flex justify-content-between align-items-center">
+                                <div><i class="fa fa-angle-right text-primary mr-2"></i> Nghỉ ngơi</div>
+                                <span style="font-weight: bold;">{{tour_detail.acommondation}}</span>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+
+              
+                <!-- Search Form -->
+                <div class="mb-5">
+                    <div class="bg-white" style="padding: 30px;">
+                        <form class="input-group" method="get" action="{% url 'app_travel:search' %}">
+                            <input type="search" class="form-control rounded" placeholder="Tìm Kiếm" aria-label="Search"
+                                aria-describedby="search-addon" name="keyword" autocomplete="off" value="" />
+                            <button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+                                <small><i class="fas fa-search" aria-hidden="true"></i></small>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Tag Cloud -->
+                <div class="mb-5">
+                    <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Tag</h4>
+                    <div class="d-flex flex-wrap m-n1">
+                        {% for category in categories %}
+                        <a href="{% url 'app_travel:tours_list' category.pk %}" class="btn btn-light m-1">{{category}}</a>
+                       
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Blog End -->
+<!-- Suggestion Start -->
+<div class="container-fluid py-5">
+    <div class="container pt-2 pb-3">
+        <div class="text-center mb-3 pb-3">
+            <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">trải nghiệm</h6>
+            <h1>Có thể bạn sẽ thích</h1>
+        </div>
+        <div class="row">
+            {% for suggested_tour in suggested_tours %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="package-item bg-white mb-2">
+                    <a href="{% url 'app_travel:tour_detail' suggested_tour.pk %}"><img class="img-fluid" src="{{suggested_tour.image.url}}"
+                            alt="{{suggested_tour.name}}"></a>
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <small class="m-0"><i
+                                    class="fa fa-map-marker-alt text-primary mr-2"></i>{{suggested_tour.category.name|truncatechars:30}}</small>
+                            <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>{{suggested_tour.days}}</small>
+                            <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1</small>
+                        </div>
+                        <a class="h5 text-decoration-none"
+                            href="{% url 'app_travel:tour_detail' suggested_tour.pk %}">{{suggested_tour.name|truncatechars:75}}</a>
+                        <div class="border-top mt-4 pt-4">
+                            <div class="d-flex justify-content-between">
+                                <div class="package-price m-0">
+                                    {{suggested_tour.price|floatformat:0|intcomma}}<span>đ</span>
+                            
+                                </div>
+                                <div class="booking-button">
+                                    <a> <button>Đặt Ngay</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<!-- Suggestion End -->
+
+
+{% endblock %}

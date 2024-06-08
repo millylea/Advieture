@@ -1,0 +1,308 @@
+{% extends "app_travel/.base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title_tab %} Tài khoản của tôi {% endblock %}
+
+{% block main_content %}
+
+<!-- Blog Start -->
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Personal Detail -->
+            <div class="pb-3">
+                <div class="bg-white mb-3" style="padding: 30px;">
+                    <div class="d-flex mb-3">
+                        <div class="">
+                            <h4>Thông tin Liên Lạc</h4>
+                            
+                            {{result_update|safe}}
+                            {% with user=request.session.s_user %}
+                            {% if not user %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6 pb-2">
+                                        <label class="text-dark">Họ</label>
+                                        <input class="form-control" type="text" value="" name="last_name">
+                                    </div>
+                                    <div class="col-md-6 pb-2">
+                                        <label class="text-dark">Tên</label>
+                                        <input class="form-control" type="text" value="" name="first_name">
+                                    </div>
+                            
+                                    <div class="col-md-6 pb-2">
+                                        <label class="text-dark">Số Điện Thoại</label>
+                                        <input class="form-control" type="text" value="" name="phone">
+                                    </div>
+                                    <div class="col-md-6 pb-2">
+                                        <label class="text-dark">Email</label>
+                                        <input class="form-control" type="text" value="" name="email">
+                                    </div>
+                                    <div class="col-md-12 pb-2">
+                                        <label class="text-dark">Địa Chỉ</label>
+                                        <input class="form-control" type="text" value="" name="address">
+                                    </div>
+
+                                </div>
+                            </form>
+                            {% else %}
+                            <div class="pb-2">Quý khách vui lòng kiểm tra thông tin liên lạc và cập nhật lại nếu có thay
+                                đổi </div>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6 pb-2">
+                                        <label>Họ:</label>
+                                        <p><strong>{{user.last_name}}</strong> </p>
+                                    </div>
+                                    <div class="col-md-6 pb-2">
+                                        <label>Tên:</label>
+                                        <p><strong>{{user.first_name}}</strong> </p>
+                                    </div>
+
+                                    <div class="col-md-6 pb-2">
+                                        <label class="text-dark">Số Điện Thoại:</label>
+                                        <p><strong>{{user.phone}}</strong> </p>
+                                    </div>
+                                    <div class="col-md-6 pb-2">
+                                        <label class="text-dark">Email:</label>
+                                    <p><strong>{{user.email}}</strong> </p>
+                                    </div>
+                                    <div class="col-md-12 pb-1">
+                                        <label class="text-dark">Địa Chỉ:</label>
+                                        <p><strong>{{user.address}}</strong> </p>
+                                    </div>
+                                    <div class="col-md-12 pb-2">
+                                        <div class="text-center">
+                                         
+                                            <a href="{% url 'app_user:my_account' %}"> Cập Nhật
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            {% endif %}
+                            {% endwith %}
+
+                            <!-- Change Password -->
+                        </div>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <div class="">
+                            <h4>Thông tin Hành Khách</h4>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-12 pb-2">
+                                        <label class="text-dark">Họ và Tên</label>
+                                        <input class="form-control" type="text" value="" name="name">
+                                    </div>
+
+                                    <div class="col-md-6 pb-2">
+                                        <label class="text-dark">Giới Tính</label>
+                                        <input class="form-control" type="text" value="" name="gender">
+                                    </div>
+                                    <div class="col-md-6 pb-2">
+                                        <label class="text-dark">Ngày tháng năm sinh</label>
+                                        <div class="row">
+                                            <div class="col-sm-12"><input class="form-control" type="text" value=""
+                                                    name="birth_day"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pb-2">
+                                        <label class="text-dark">Số Điện Thoại Liên Lạc</label>
+                                        <input class="form-control" type="text" value="{{user.phone}}" name="phone">
+                                    </div>
+
+                                    <div class="col-md-12 pb-2">
+                                        <label class="text-dark">Địa Chỉ</label>
+                                        <input class="form-control" type="text" value="{{user.address}}" name="address">
+                                    </div>
+                                    <div class="col-md-12 pb-2">
+                                        <label class="text-dark">so luon nguoi lon</label>
+                                        <input class="form-control" type="text" value="{{user.address}}" name="address">
+                                    </div>
+                                    <div class="col-md-12 pb-2">
+                                        <label class="text-dark">Địa Chỉ</label>
+                                        <input class="form-control" type="text" value="{{user.address}}" name="address">
+                                    </div>
+
+                                </div>
+                            </form>
+
+
+                            <!-- Change Password -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Blog Detail End -->
+
+            <!-- Comment List Start -->
+            <div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
+                <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">3 Comments</h4>
+                <div class="media mb-4">
+                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                    <div class="media-body">
+                        <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
+                        <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore
+                            accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.
+                            Gubergren clita aliquyam consetetur sadipscing, at tempor amet ipsum diam tempor
+                            consetetur at sit.</p>
+                        <button class="btn btn-sm btn-outline-primary">Reply</button>
+                    </div>
+                </div>
+                <div class="media">
+                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                    <div class="media-body">
+                        <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
+                        <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore
+                            accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.
+                            Gubergren clita aliquyam consetetur sadipscing, at tempor amet ipsum diam tempor
+                            consetetur at sit.</p>
+                        <button class="btn btn-sm btn-outline-primary">Reply</button>
+                        <div class="media mt-4">
+                            <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                            <div class="media-body">
+                                <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
+                                <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor
+                                    labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed
+                                    eirmod ipsum. Gubergren clita aliquyam consetetur sadipscing, at tempor amet
+                                    ipsum diam tempor consetetur at sit.</p>
+                                <button class="btn btn-sm btn-outline-primary">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Comment List End -->
+
+            <!-- Comment Form Start -->
+            <div class="bg-white mb-3" style="padding: 30px;">
+                <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Leave a comment</h4>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name *</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="website">Website</label>
+                        <input type="url" class="form-control" id="website">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-0">
+                        <input type="submit" value="Leave a comment"
+                            class="btn btn-primary font-weight-semi-bold py-2 px-3">
+                    </div>
+                </form>
+            </div>
+            <!-- Comment Form End -->
+        </div>
+        <div class="col-lg-4 mt-5 mt-lg-0">
+            <!-- User Bio -->
+            <h4 class=" mb-3">Tóm tắt tour</h4>
+            <div class="d-flex flex-column text-center bg-white mb-3 py-5 ">
+                <!-- <img src="user/img/user.jpg" class="img-fluid mx-auto mb-3" style="width: 100px;"> -->
+                
+                <div class="bg-white" style="padding: 10px;">
+                    <div class="pb-3">
+                        <img style="width:200px;height:100px" src="{{tour_detail.image.url}}" alt="{{tour_detail.name}}"> 
+                    </div>
+                    <ul class="list-inline m-0">
+                        <li class="mb-3 d-flex justify-content-between align-items-center">
+                            <div  style="font-weight: bold">{{tour_detail.name}}</div>
+                         
+                        </li>
+                        <li class="mb-3 d-flex justify-content-between align-items-center">
+                            <div><i class="fa fa-angle-right text-primary mr-2"></i>Khởi hành từ</div>
+                            <span style="font-weight: bold;">{{tour_detail.departure.name}}</span>
+                        </li>
+                        <li class="mb-3 d-flex justify-content-between align-items-center">
+                            <div><i class="fa fa-angle-right text-primary mr-2"></i>Ngày khởi hành</div>
+                            <span style="font-weight: bold;">150</span>
+                        </li>
+                        <li class="mb-3 d-flex justify-content-between align-items-center">
+                            <div><i class="fa fa-angle-right text-primary mr-2"></i> Thời gian</div>
+                            <span style="font-weight: bold;">{{tour_detail.days}}</span>
+                        </li>
+                        <li class="mb-3 d-flex justify-content-between align-items-center">
+                            <div><i class="fa fa-angle-right text-primary mr-2"></i> Phương tiện</div>
+                            <span style="font-weight: bold;">{{tour_detail.transportation}}</span>
+                        </li>
+                        <li class="mb-3 d-flex justify-content-between align-items-center">
+                            <div><i class="fa fa-angle-right text-primary mr-2"></i> Nghỉ ngơi</div>
+                            <span style="font-weight: bold;">{{tour_detail.acommondation}}</span>
+                        </li>
+                        <div class="booking-button"><a href=""><button class="btn" type="submit"
+                                    name="btnCheckout" value="Tiến Hành Đặt"> Tiến Hành Đặt </button></a></div>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Booked Tours -->
+            <div class="mb-3">
+                <h4 class="mb-4">Hành Trình</h4>
+                <div class="bg-white" style="padding: 30px;">
+                    <ul class="nav flex-column nav-tabs" aria-orientation="vertical">
+                        <li class="mb-2 d-flex justify-content-between align-items-center">
+                            <a data-toggle="tab" href="#coming-tour"><i class="fas fa-clock mr-2"></i>Tour Sắp Tới</a>
+                            <span class="badge badge-primary badge-pill">150</span>
+                        </li>
+                        <li class="mb-2 d-flex justify-content-between align-items-center">
+                            <a data-toggle="tab" href="#history"><i class="fas fa-history mr-2"></i>Lịch Sử</a>
+                            <span class="badge badge-primary badge-pill">150</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- User Detail -->
+            <div class="mb-3">
+                <h4 class=" mb-3">Tài Khoản</h4>
+                <div class="bg-white" style="padding: 30px;">
+                    <ul class="nav flex-column nav-tabs" aria-orientation="vertical">
+                        <li class="active"><a data-toggle="tab" href="#personal_detail"><i
+                                    class="fa fa-angle-right text-primary mr-2"></i>Thông tin cá nhân</a></li>
+                        <li><a data-toggle="tab" href="#change_password">Đổi mật khẩu</a></li>
+                        <li class="pt-2"><a href="{% url 'app_user:logout' %}"><i
+                                    class="fas fa-sign-out-alt mr-2"></i>Đăng Xuất</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Search Form -->
+            <div class="mb-5">
+                <div class="bg-white" style="padding: 30px;">
+                    <form class="input-group" method="get" action="{% url 'app_travel:search' %}">
+                        <input type="search" class="form-control rounded" placeholder="Tìm Kiếm" aria-label="Search"
+                            aria-describedby="search-addon" name="keyword" autocomplete="off" value="" />
+                        <button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+                            <small><i class="fas fa-search" aria-hidden="true"></i></small>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+
+    </div>
+</div>
+
+<!-- Blog End -->
+
+
+{% endblock %}
