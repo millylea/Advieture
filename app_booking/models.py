@@ -32,4 +32,3 @@ class Booking(models.Model):
 class BookingHistory(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-

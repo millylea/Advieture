@@ -5,7 +5,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import EmailMessage
 import markdown
 from datetime import datetime
-from app_travel.models import Category, Promotions, BackgroundSlider, Tour, Departure, Contact
+from app_travel.models import (
+    Category,
+    Promotions,
+    BackgroundSlider,
+    Tour,
+    Departure,
+    Contact,
+)
 
 
 # Create your views here.
@@ -140,6 +147,7 @@ def search(request):
         },
     )
 
+
 def contact(request):
     categories = Category.objects.all()
     result_contact = ""
@@ -152,11 +160,11 @@ def contact(request):
         message = request.POST.get("message")
         # Luu CSDL
         Contact.objects.create(
-            name = name,
-            phone = phone,
-            email = email,
-            subject = subject,
-            message = message,
+            name=name,
+            phone=phone,
+            email=email,
+            subject=subject,
+            message=message,
         )
         result_contact = """
              <div class="alert alert-success" role="alert">
@@ -168,7 +176,9 @@ def contact(request):
         recipients = [email, sender]
         title = f"[Feedback] {subject}"
         content = "<p> Chào bạn <strong>" + name + "</strong>,"
-        content += "<p> Advieture đã nhận được thông tin liên hệ của bạn với tiêu đề: </p>"
+        content += (
+            "<p> Advieture đã nhận được thông tin liên hệ của bạn với tiêu đề: </p>"
+        )
         content += "<p>" + subject + "</p>"
         content += "<p>Chúng tôi sẽ phản hồi lại bạn trong thời gian sớm nhất.</p>"
         content += "<p>Cảm ơn bạn đã liên hệ</p>"

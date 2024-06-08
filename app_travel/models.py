@@ -66,8 +66,10 @@ class Promotions(models.Model):
     image = models.ImageField(
         upload_to="tours/promotions", default="tours/promotions/default.png"
     )
+
     def __str__(self):
         return self.name
+
 
 class BackgroundSlider(models.Model):
     caption = models.CharField(max_length=250, unique=True)
@@ -76,5 +78,6 @@ class BackgroundSlider(models.Model):
         upload_to="tours/background-slider",
         default="tours/background-slider/default.png",
     )
+
     def __str__(self):
         return self.caption

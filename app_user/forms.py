@@ -34,8 +34,9 @@ class FormRegister(forms.ModelForm):
 
     password = forms.CharField(
         max_length=250,
-        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Mật khẩu"}
-    ),
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Mật khẩu"}
+        ),
     )
     confirm_password = forms.CharField(
         max_length=250,
@@ -43,6 +44,7 @@ class FormRegister(forms.ModelForm):
             attrs={"class": "form-control", "placeholder": "Xác nhận Mật khẩu"}
         ),
     )
+
     class Meta:
         model = User
         fields = "__all__"

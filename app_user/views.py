@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
 from django.template.loader import render_to_string
@@ -89,6 +89,7 @@ def logout(request):
         del request.session["s_user"]
         return redirect("app_user:login")
 
+
 def my_account(request):
     categories = Category.objects.all()
     dict_user = request.session["s_user"]
@@ -97,7 +98,7 @@ def my_account(request):
     if not "s_user" in request.session:
         return redirect("app_travel:login")
 
-    result_update =''
+    result_update = ""
     if request.POST.get("btnUpdate"):
         last_name = request.POST.get("last_name")
         first_name = request.POST.get("first_name")
@@ -117,7 +118,7 @@ def my_account(request):
         dict_user["phone"] = phone
         dict_user["email"] = email
         dict_user["address"] = address
-        
+
         result_update = """
                 <div class="alert alert-success" role="alert">
                         Thông tin đã được cập nhật
@@ -149,6 +150,10 @@ def my_account(request):
     return render(
         request,
         "app_travel/my-account.html",
-        {"user": user, "categories": categories, "result_update": result_update,
-        "result_password":result_password}
+        {
+            "user": user,
+            "categories": categories,
+            "result_update": result_update,
+            "result_password": result_password,
+        },
     )
