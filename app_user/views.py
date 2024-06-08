@@ -7,6 +7,7 @@ from datetime import datetime
 from app_travel.models import Category, Tour
 from app_user.models import User
 from app_user.forms import FormRegister
+from app_booking.models import Booking, BookingStatus
 
 salt = "123456"
 hasher = PBKDF2PasswordHasher()
@@ -91,6 +92,7 @@ def logout(request):
 
 
 def my_account(request):
+
     categories = Category.objects.all()
     dict_user = request.session["s_user"]
     user = User.objects.get(pk=request.session["s_user"]["id"])
@@ -147,6 +149,10 @@ def my_account(request):
                 <div class="alert alert-danger" role="alert">
                         sai mật khẩu!
                 </div> """
+
+    user = request.session["s_user"]
+    bookings = Booking.objects.filter(user=user["id"], status=BookingStatus.PAID)
+
     return render(
         request,
         "app_travel/my-account.html",
@@ -155,5 +161,7 @@ def my_account(request):
             "categories": categories,
             "result_update": result_update,
             "result_password": result_password,
+            "bookings": bookings,
         },
     )
+

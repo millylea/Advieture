@@ -98,14 +98,11 @@
                                     {% csrf_token %}
                                     <div class="row">
                                         <div class="col-md-12 pb-2">
-                                            <label class="text-dark">Họ và Tên</label>
+                                            <label class="text-dark">Họ và Tên Khai Sinh</label>
                                             <input class="form-control" type="text" value="" name="name">
                                         </div>
 
-                                        <div class="col-md-6 pb-2">
-                                            <label class="text-dark">Giới Tính</label>
-                                            <input class="form-control" type="text" value="" name="gender">
-                                        </div>
+                                       
                                         <div class="col-md-6 pb-2">
                                             <label class="text-dark">Ngày tháng năm sinh</label>
                                             <div class="row">
@@ -122,15 +119,11 @@
                                             <label class="text-dark">Địa Chỉ</label>
                                             <input class="form-control" type="text" value="{{user.address}}" name="address">
                                         </div>
-                                        <div class="col-md-12 pb-2">
-                                            <label class="text-dark">Địa Chỉ</label>
-                                            <input class="form-control" type="text" value="{{user.address}}" name="address">
-                                        </div>
 
                                     </div>
     
                             </div>
-                            <div class="row" style="border: 1px solid #eee">
+                            <div class="row mt-3" style="border: 1px solid #eee">
                             
                                 <div class="col-md-6">
                                     <div class="row">
@@ -155,7 +148,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="booking-button"><a href=""><button class="btn" type="submit" name="btnCheckout" value="Tiến Hành Đặt"> Tiến
+
+                            <div class="booking-button mt-5 text-center"><a href=""><button class="btn" type="submit" name="btnCheckout" value="Tiến Hành Đặt"> Tiến
                                         Hành Đặt </button></a></div>
                         </form>
                     </div>

@@ -43,7 +43,8 @@ class Tour(models.Model):
     schedule = models.TextField(null=False)
     booked = models.IntegerField(default=0)
     departure_date = models.DateField(null=True)
-
+    def children_price (self):
+        return self.price/2
     def __str__(self):
         return self.name
 

@@ -21,12 +21,26 @@ class Booking(models.Model):
     adult_quantity = models.IntegerField(default=1)
     children_quantity = models.IntegerField(default=0)
     discount = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-
+    def adult_price(self, tour_price):
+        
+        return self.adult_quantity*tour_price
+    
+    def children_price(self, tour_price):
+        
+        return self.adult_quantity*tour_price/2
     class Meta:
         ordering = ("-created_date",)
 
     def __str__(self):
         return f"#{self.id}"
+
+class Passenger(models.Model):
+    booking = booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    phone = models.CharField(max_length=20, null=True)
+    address = models.TextField(null=True, blank=True)
+    birthday = models.DateField(null=True)
+
 
 
 class BookingHistory(models.Model):

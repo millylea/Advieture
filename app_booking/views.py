@@ -3,18 +3,18 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.core.mail import EmailMessage
 from datetime import datetime
-from app_travel.models import Category, Tour, Contact
+from app_travel.models import Category, Tour, Contact, Departure
 from app_user.models import User
-from app_booking.models import Booking
+from app_booking.models import Booking, BookingStatus
 from app_user.views import *
 
 
 def tour_booking(request, tour_id):
     categories = Category.objects.all()
-    tour_detail = Tour.objects.filter(id=tour_id).first()
+    tour_detail = Tour.objects.get(id=tour_id)
 
-    user = request.session.get("s_user")
-
+    user_id = request.session.get("s_user")["id"]
+    user = User.objects.get(pk=user_id)
     if request.POST.get("btnCheckout"):
         try:
 
@@ -25,16 +25,17 @@ def tour_booking(request, tour_id):
             return render(
                 request, "app_travel/booking.html", {"error": "error"}, status=400
             )
-
-        booking_price = (adult_quantity + children_quantity) * tour_detail.price
+        
         booking = Booking(
-            user["id"],
+            user=user,
             tour=tour_detail,
-            total_price=booking_price,
             adult_quantity=adult_quantity,
             children_quantity=children_quantity,
         )
-        booking.save()
+        booking.total_price = booking.adult_price(
+            tour_detail.price
+        ) + booking.children_price(tour_detail.price)
+        booking.save() - booking.discount
         return redirect("app_booking:checkout")
     return render(
         request,
@@ -43,6 +44,29 @@ def tour_booking(request, tour_id):
     )
 
 
-def checkout(request):
+def checkout(request, booking_id):
+    booking = Booking.objects.get(id=booking_id)
+    if request.POST.get("btnPayment"):
+        booking.status = BookingStatus.PAID
+        booking.save()
+        return redirect("app_user:my_account")
 
-    return render(request, "app_travel/check-out.html")
+    return render(
+        request,
+        "app_travel/check-out.html",
+        {
+            "booking": booking,
+        },
+    )
+
+
+def result(request, booking_id):
+    booking = Booking.objects.get(id=booking_id)
+
+    return render(
+        request,
+        "app_travel/result.html",
+        {
+            "booking": booking,
+        },
+    )

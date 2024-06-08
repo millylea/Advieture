@@ -93,15 +93,17 @@
                         <a href="{% url 'app_user:login' %}" class="nav-item nav-link">Đăng Nhập</a>
                         {% else %}
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user mr-1"></i> {{user.last_name}} {{user.first_name}}
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i
+                                    class="fas fa-user mr-1"></i> {{user.last_name}} {{user.first_name}}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="{% url 'app_user:my_account' %}" class="dropdown-item">Tài khoản của tôi</a>
                                 <a href="" class="dropdown-item">Yêu Thích</a>
-                                <a href="{% url 'app_user:logout' %}" class="dropdown-item"><i class="fas fa-sign-out-alt mr-1"></i>Đăng xuất</a>
+                                <a href="{% url 'app_user:logout' %}" class="dropdown-item"><i
+                                        class="fas fa-sign-out-alt mr-1"></i>Đăng xuất</a>
                             </div>
                         </div>
-                        
+
                         {% endif %}
                         {% endwith %}
                     </div>
@@ -130,7 +132,8 @@
                 <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Dịch Vụ Du Lịch</h5>
                 <div class="d-flex flex-column justify-content-start">
                     {% for category in categories %}
-                    <a class="text-white-50 mb-2" href="{% url 'app_travel:tours_list' category.pk %}"><i class="fa fa-angle-right mr-2"></i>{{category.name}}</a>
+                    <a class="text-white-50 mb-2" href="{% url 'app_travel:tours_list' category.pk %}"><i
+                            class="fa fa-angle-right mr-2"></i>{{category.name}}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -147,7 +150,7 @@
                 <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA</p>
                 <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
                 <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
-               
+
             </div>
         </div>
     </div>
@@ -194,6 +197,8 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'app_travel/js/main.js' %}"></script>
+
+    {% block page_script %} {% endblock %}
 </body>
 
 </html>
