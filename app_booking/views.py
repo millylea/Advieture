@@ -25,7 +25,7 @@ def tour_booking(request, tour_id):
             return render(
                 request, "app_travel/booking.html", {"error": "error"}, status=400
             )
-        
+
         booking = Booking(
             user=user,
             tour=tour_detail,
@@ -49,23 +49,26 @@ def checkout(request, booking_id):
     if request.POST.get("btnPayment"):
         booking.status = BookingStatus.PAID
         booking.save()
+        email = booking.user.email
+        name = booking.user.last_name + " " + booking.user.first_name
+        tour = booking.tour.name
+        payment = booking.total_price
+        # Automatic Email
+        sender = settings.EMAIL_HOST_USER
+        recipients = [email, sender]
+        title = f"[Thông báo] {booking.id}"
+        content = "<p> Chào bạn <strong>" + name + "</strong>,"
+        content += "<p> Advieture xác nhận hoàn tất thanh toán số tiền payment cho chuyến đi: </p>"
+        content += "<p>" + tour + "</p>"
+        content += "<p>Cảm ơn bạn đã tin tưởng Advieture</p>"
+        msg = EmailMessage(title, content, sender, recipients)
+        msg.content_subtype = "html"
+        msg.send()
         return redirect("app_user:my_account")
 
     return render(
         request,
         "app_travel/check-out.html",
-        {
-            "booking": booking,
-        },
-    )
-
-
-def result(request, booking_id):
-    booking = Booking.objects.get(id=booking_id)
-
-    return render(
-        request,
-        "app_travel/result.html",
         {
             "booking": booking,
         },
