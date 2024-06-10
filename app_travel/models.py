@@ -40,7 +40,7 @@ class Tour(models.Model):
     journey = models.CharField(max_length=200, null=True)
     transportation = models.CharField(max_length=200, null=True)
     acommondation = models.CharField(max_length=200, null=True)
-    schedule = models.TextField(null=False)
+    schedule = RichTextUploadingField(blank=True)
     booked = models.IntegerField(default=0)
     departure_date = models.DateField(null=True)
     def children_price (self):

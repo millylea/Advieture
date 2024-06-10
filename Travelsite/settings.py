@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "ckeditor",
+    "ckeditor_uploader",
     "mathfilters",
     "app_travel",
     "app_user",
