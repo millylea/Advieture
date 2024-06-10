@@ -152,6 +152,7 @@ def my_account(request):
 
     user = request.session["s_user"]
     bookings = Booking.objects.filter(user=user["id"], status=BookingStatus.PAID)
+    bookings_history = Booking.objects.filter(user=user["id"], status=BookingStatus.COMPLETE)
 
     return render(
         request,
@@ -162,6 +163,6 @@ def my_account(request):
             "result_update": result_update,
             "result_password": result_password,
             "bookings": bookings,
+            "bookings_history": bookings_history,
         },
     )
-
