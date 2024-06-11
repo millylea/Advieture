@@ -5,7 +5,7 @@ from django.core.mail import EmailMessage
 from datetime import datetime
 from app_travel.models import Category, Tour, Contact, Departure
 from app_user.models import User
-from app_booking.models import Booking, BookingStatus
+from app_booking.models import Booking, BookingStatus, Passenger
 from app_user.views import *
 
 
@@ -22,7 +22,7 @@ def tour_booking(request, tour_id):
             if not adult_quantity.isdigit() or not children_quantity.isdigit():
                 raise ValueError("Nhập số lượng là số")
             adult_quantity = int(adult_quantity)
-            children_quantity = int(adult_quantity)
+            children_quantity = int(children_quantity)
             if adult_quantity < 1:
                 raise ValueError("Số lượng Người Lớn ít nhất là 1 ")
             if children_quantity < 0:
@@ -40,12 +40,17 @@ def tour_booking(request, tour_id):
             children_quantity=children_quantity,
         )
         booking.total_price = (
-            booking.adult_price(tour_detail.price)
-            + booking.children_price(tour_detail.price)
+            booking.adult_total_price
+            + booking.children_total_price
             - booking.discount
         )
-        booking.save() 
-        return redirect("app_booking:checkout",booking.id)
+        booking.save()
+        name = request.POST.get("p_name")
+        phone = request.POST.get("p_phone")
+        address = request.POST.get("p_address")
+        passenger = Passenger(name=name,phone=phone, address=address, booking=booking)
+        passenger.save()
+        return redirect("app_booking:checkout", booking.id)
 
     return render(
         request,
@@ -56,9 +61,8 @@ def tour_booking(request, tour_id):
 
 def checkout(request, booking_id):
     booking = Booking.objects.get(id=booking_id)
-    adult_price = booking.adult_price(booking.tour.price)
-    children_price = booking.children_price(booking.tour.price)
-    passenger_price = (adult_price) + (children_price)
+    passenger_price = booking.adult_total_price + booking.children_total_price
+    print(booking.children_total_price)
 
     if request.POST.get("btnPayment"):
         booking.status = BookingStatus.PAID

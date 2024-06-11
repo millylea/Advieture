@@ -72,6 +72,7 @@
                     <td class="text-right">{{booking_details.adult_total_price|floatformat:0|intcomma}}</td>
                     
                 </tr>
+                {% if booking_details.children_quantity > 0 %}
                 <tr>
                     <td scope="col" class="text-center"> Trẻ em</td>
 
@@ -82,6 +83,7 @@
                     
                     <td class="text-right">{{booking_details.children_total_price|floatformat:0|intcomma}}</td>
                 </tr>
+                {% endif %}
                 <tr >
                     <td colspan="5" class="text-right">
                         <h5><b>Tổng tiền</b></h5>
