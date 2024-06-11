@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.db.models import Q
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
 from django.template.loader import render_to_string
+import pdfkit
+import os
+import uuid
 from django.conf import settings
 from datetime import datetime
 from app_travel.models import Category, Tour
@@ -100,6 +103,7 @@ def my_account(request):
     if not "s_user" in request.session:
         return redirect("app_travel:login")
 
+    # update
     result_update = ""
     if request.POST.get("btnUpdate"):
         last_name = request.POST.get("last_name")
@@ -127,6 +131,7 @@ def my_account(request):
                 </div> """
 
     result_password = ""
+    # change password
     if request.POST.get("btnChangePassword"):
         password = request.POST.get("password")
         if user.password == password:
@@ -149,10 +154,13 @@ def my_account(request):
                 <div class="alert alert-danger" role="alert">
                         sai mật khẩu!
                 </div> """
-
+    # bookings
     user = request.session["s_user"]
     bookings = Booking.objects.filter(user=user["id"], status=BookingStatus.PAID)
-    bookings_history = Booking.objects.filter(user=user["id"], status=BookingStatus.COMPLETE)
+
+    bookings_history = Booking.objects.filter(
+        user=user["id"], status=BookingStatus.COMPLETE
+    )
 
     return render(
         request,
@@ -166,3 +174,26 @@ def my_account(request):
             "bookings_history": bookings_history,
         },
     )
+
+
+# export pdf no request
+def export_payment_to_pdf(request, booking_id):
+    user = request.session.get("s_user")
+    booking_details = Booking.objects.get(id=booking_id)
+
+    pdf_render = render_to_string(
+        "app_travel/report_payment.html",
+        {"booking_details": booking_details, "user": user},
+    )
+
+    config = pdfkit.configuration(
+        wkhtmltopdf="C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe"
+    )
+    file_name = f"Booking_{booking_id}_{uuid.uuid4()}.pdf"
+    report_dir = os.path.join(settings.MEDIA_ROOT, "payment_pdf")
+    if not os.path.exists(report_dir):
+        os.makedirs(report_dir)
+    out_path = os.path.join(report_dir, file_name)
+    pdfkit.from_string(pdf_render, out_path, configuration=config)
+
+    return redirect(f"/media/payment_pdf/{file_name}")

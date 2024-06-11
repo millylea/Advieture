@@ -1,6 +1,8 @@
 {% extends "app_travel/.base.html" %}
 {% load static %}
+{% load my_templatetags %}
 {% load humanize %}
+{% load mathfilters %}
 {% block title_tab %} Tài khoản của tôi {% endblock %}
 
 {% block main_content %}
@@ -178,16 +180,95 @@
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <h5 class="card-title">{{booking.tour.departure_date|date:"d-m-Y"}}</h5>
+                                                            <h5 class="card-title">
+                                                                {{booking.tour.departure_date|date:"d-m-Y"}}</h5>
                                                         </div>
-                                                        <div class="col-md-6" style="color:green; font-weight: bold;">
-                                                            Đã Thanh Toán
+                                                        <div class="col-md-6">
+                                                            <button
+                                                                style="background-color: white;color:green; font-weight: bold;"
+                                                                type="button" class="btn btn-primary"
+                                                                data-toggle="modal"
+                                                                data-target="#booking_{{booking.id}}">
+                                                                Đã Thanh Toán
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                    <a class=" text-decoration-none "
+                                                        href="{% url 'app_travel:tour_detail' booking.tour.id %}">
+                                                        <p class="card-text pt-2"
+                                                            style="font-weight: bold; color:darkslategray">
+                                                            {{booking.tour.name}}
+                                                        </p>
+                                                    </a>
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-6">
+                                                            <div class="card-text text-dark"><i
+                                                                    class="far fa-calendar  mr-2"></i>{{booking.tour.days}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="card-text text-dark"><i
+                                                                    class="fas fa-car mr-2"></i>{{booking.tour.transportation}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="card-text text-dark"><i
+                                                                    class="fas fa-hotel mr-2"></i>{{booking.tour.acommondation}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="card-text text-dark"><i
+                                                                    class="fas fa-location-arrow mr-2"></i>{{booking.tour.departure.name}}
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+
+                                    {% else %}
+                                    <div class="text-center">
+                                        <h4>Bạn không có chuyến đi nào sắp tới</h4>
+                                        <div> Đặt tour để trải nghiệm thêm những chuyến đi</div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+
+                                <div id="history" class="tab-pane fade">
+                                    <h3>Lịch Sử</h3>
+                                    {% if bookings_history|length > 0 %}
+                                    {% for booking in bookings_history %}
+                                    <div class="card mb-3" style="width: 700px">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-4">
+                                                <div class="card-body">
+                                                    <img style="width: 100%" src="{{booking.tour.image.url}}">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h5 class="card-title">
+                                                                {{booking.tour.departure_date|date:"d-m-Y"}}</h5>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <button style="background-color: white;color:darkgoldenrod; font-weight: bold;" type="button" class="btn btn-secondary"
+                                                            data-toggle="modal" data-target="#booking_{{booking.id}}">
+                                                            Đã Hoàn Tất
+                                                        </button>
                                                         </div>
 
                                                     </div>
                                                     <a class=" text-decoration-none"
                                                         href="{% url 'app_travel:tour_detail' booking.tour.id %}">
-                                                        <p class="card-text"
+                                                        <p class="card-text pt-2"
                                                             style="font-weight: bold; color:darkslategray">
                                                             {{booking.tour.name}}
                                                         </p>
@@ -223,71 +304,7 @@
                                         </div>
                                     </div>
                                     {% endfor %}
-
-                                    {% else %}
-                                    <div class="text-center">
-                                        <h4>Bạn không có chuyến đi nào sắp tới</h4>
-                                        <div> Đặt tour để trải nghiệm thêm những chuyến đi</div>
-                                    </div>
                                     {% endif %}
-                                </div>
-
-                                <div id="history" class="tab-pane fade">
-                                    <h3>Lịch Sử</h3>
-                                    {% if bookings_history|length > 0 %}
-                                    {% for booking in bookings_history %}
-                                    <div class="card mb-3" style="width: 700px">
-                                        <div class="row no-gutters">
-                                            <div class="col-md-4">
-                                                <div class="card-body">
-                                                    <img style="width: 100%" src="{{booking.tour.image.url}}">
-                                    
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <h5 class="card-title">{{booking.tour.departure_date|date:"d-m-Y"}}</h5>
-                                                        </div>
-                                                        <div class="col-md-6" style="color:green; font-weight: bold;">
-                                                            <button>Đã Hoàn Tất</button>
-                                                        </div>
-                                    
-                                                    </div>
-                                                    <a class=" text-decoration-none" href="{% url 'app_travel:tour_detail' booking.tour.id %}">
-                                                        <p class="card-text" style="font-weight: bold; color:darkslategray">
-                                                            {{booking.tour.name}}
-                                                        </p>
-                                                    </a>
-                                                    <div class="row mt-4">
-                                                        <div class="col-sm-6">
-                                                            <div class="card-text text-dark"><i class="far fa-calendar  mr-2"></i>{{booking.tour.days}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="card-text text-dark"><i class="fas fa-car mr-2"></i>{{booking.tour.transportation}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="card-text text-dark"><i class="fas fa-hotel mr-2"></i>{{booking.tour.acommondation}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="card-text text-dark"><i
-                                                                    class="fas fa-location-arrow mr-2"></i>{{booking.tour.departure.name}}
-                                                            </div>
-                                                        </div>
-                                    
-                                    
-                                    
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    
-                                        </div>
-                                    </div>
-                                    {% endfor %}
 
                                 </div>
 
@@ -303,7 +320,117 @@
         </div>
     </div>
 </div>
-<!-- Blog End -->
+
+<!-- Modal -->
+{% for booking in bookings %}
+<div class="modal fade" id="booking_{{booking.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết Thanh Toán</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-inline m-0">
+                    <li class="mb-3 d-flex justify-content-between align-items-center">
+                        <div style="font-weight: bold;"><i class="fa fa-angle-right text-primary mr-2"></i>Hành
+                            Khách</div>
+                        <span style="font-weight: bold; color:red"> {{booking.adult_price|add:booking.children_price|floatformat:0|intcomma}} </span>
+                    </li>
+                    <li class="mb-3 d-flex justify-content-between align-items-center">
+                        <small class=" mr-2">Người lớn</small>
+                        <small style="font-weight: bold;">{{booking.adult_quantity}} x
+                            {{booking.tour.price|floatformat:0|intcomma}}</small>
+                    </li>
+                    <li class="mb-3 d-flex justify-content-between align-items-center">
+                        <small class=" mr-2">Trẻ Em</small>
+                        <small style="font-weight: bold;">{{booking.children_quantity}} x
+                            {{booking.tour.children_price|floatformat:0|intcomma}}</small>
+                    </li>
+                    <li class="mb-3 d-flex justify-content-between align-items-center">
+                        <div style="font-weight: bold;"><i class="fa fa-angle-right text-primary mr-2"></i>Giảm
+                            Giá</div>
+                        <span style="font-weight: bold;color:red">{{booking.discount}}</span>
+                    </li>
+                    <li class="mb-3 d-flex justify-content-between align-items-center">
+                        <small class=" mr-2">voucher</small>
+                        <small style="font-weight: bold;">0</small>
+                    </li>
+                    <li class="mb-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 style="font-weight: bold;">Tổng Tiền</h5>
+                        </div>
+                        <span style="font-weight: bold; color:red">{{booking.total_price|floatformat:0|intcomma}}</span>
+                    </li>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary">Tải PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% for booking in bookings_history %}
+<div class="modal fade" id="booking_{{booking.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết Thanh Toán</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-inline m-0">
+                    <li class="mb-3 d-flex justify-content-between align-items-center">
+                        <div style="font-weight: bold;"><i class="fa fa-angle-right text-primary mr-2"></i>Hành
+                            Khách</div>
+                        <span style="font-weight: bold; color:red"> {{booking.adult_price|add:booking.children_price|floatformat:0|intcomma}} </span>
+                    </li>
+                    <li class="mb-3 d-flex justify-content-between align-items-center">
+                        <small class=" mr-2">Người lớn</small>
+                        <small style="font-weight: bold;">{{booking.adult_quantity}} x
+                            {{booking.tour.price|floatformat:0|intcomma}}</small>
+                    </li>
+                    <li class="mb-3 d-flex justify-content-between align-items-center">
+                        <small class=" mr-2">Trẻ Em</small>
+                        <small style="font-weight: bold;">{{booking.children_quantity}} x
+                            {{booking.tour.children_price|floatformat:0|intcomma}}</small>
+                    </li>
+                    <li class="mb-3 d-flex justify-content-between align-items-center">
+                        <div style="font-weight: bold;"><i class="fa fa-angle-right text-primary mr-2"></i>Giảm
+                            Giá</div>
+                        <span style="font-weight: bold;color:red">{{booking.discount}}</span>
+                    </li>
+                    <li class="mb-3 d-flex justify-content-between align-items-center">
+                        <small class=" mr-2">voucher</small>
+                        <small style="font-weight: bold;">0</small>
+                    </li>
+                    <li class="mb-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 style="font-weight: bold;">Tổng Tiền</h5>
+                        </div>
+                        <span style="font-weight: bold; color:red">{{booking.total_price|floatformat:0|intcomma}}</span>
+                    </li>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary">Tải PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+
+
 
 
 {% endblock %}

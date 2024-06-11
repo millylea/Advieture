@@ -1,0 +1,99 @@
+{% load static %}
+
+{% load humanize %}
+{% load mathfilters %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="pdfkit-page-size" content="A4" />
+    <meta name="pdfkit-orientation" content="Landscape" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    
+    <title></title>
+</head>
+
+<body>
+    
+    <div class="container">
+        <table class="table table-borderless">
+            
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: left">
+                        <h1 class="m-0 text-primary" ><span class="text-dark">AD</span>VIETURE</h1>
+                    </td>
+                    <td style="text-align: right; vertical-align: bottom">
+
+                        <h6><strong>Mã đặt: #{{ booking_details.pk }}</strong></h6>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr style="border-bottom: 1px solid #ccc">
+        
+        <p><strong>Họ tên khách hàng:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+        <p><strong>Điện thoại:</strong> {{ user.phone }}</p>
+        <p><strong>email:</strong> {{ user.email }}</p>
+        <p><strong>Ngày thanh toán:</strong> {{ booking_details.created_date|date:"d-m-Y"}}</p>
+        <p><strong>Dịch Vụ thanh toán :</strong> {{ booking_details.tour.name}}</p>
+        
+        <table class="table table-striped table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Khách hàng</th>
+                    <th scope="col" class="text-center">Số lượng </th>
+                    <th scope="col" class="text-right">Đơn giá</th>
+                    <th scope="col" class="text-right">Giảm giá</th>
+                    <th scope="col" class="text-right">Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td scope="col" class="text-center"> Người lớn</td>
+                    <td class="text-center">{{booking_details.adult_quantity}}</td>
+                    <td class="text-right">{{booking_details.tour.price|floatformat:0|intcomma}}</td>
+                    <td class="text-right">{{booking_details.discount|floatformat:0|intcomma}}
+                    </td>
+                    <td class="text-right">{{booking_details.adult_total_price|floatformat:0|intcomma}}</td>
+                    
+                </tr>
+                <tr>
+                    <td scope="col" class="text-center"> Trẻ em</td>
+
+                    <td class="text-center">{{booking_details.children_quantity}}</td>
+                    <td class="text-right">{{booking_details.tour.children_price|floatformat:0|intcomma}}</td>
+                    <td class="text-right">{{booking_details.discount|floatformat:0|intcomma}}
+                    </td>
+                    
+                    <td class="text-right">{{booking_details.children_total_price|floatformat:0|intcomma}}</td>
+                </tr>
+                <tr >
+                    <td colspan="5" class="text-right">
+                        <h5><b>Tổng tiền</b></h5>
+                    </td>
+                    <td colspan="2" class="text-right">
+                        <div style="color:red; font-weight:bold; font-size:20px"><b>{{booking_details.total_price|floatformat:0|intcomma}} đ</b></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+
+</html>

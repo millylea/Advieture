@@ -17,13 +17,20 @@ def tour_booking(request, tour_id):
     user = User.objects.get(pk=user_id)
     if request.POST.get("btnCheckout"):
         try:
+            adult_quantity = request.POST.get("adult_quantity")
+            children_quantity = request.POST.get("children_quantity")
+            if not adult_quantity.isdigit() or not children_quantity.isdigit():
+                raise ValueError("Nhập số lượng là số")
+            adult_quantity = int(adult_quantity)
+            children_quantity = int(adult_quantity)
+            if adult_quantity < 1:
+                raise ValueError("Số lượng Người Lớn ít nhất là 1 ")
+            if children_quantity < 0:
+                raise ValueError("Số lượng phải là số dương")
 
-            adult_quantity = int(request.POST.get("adult_quantity"))
-            children_quantity = int(request.POST.get("children_quantity"))
-
-        except ValueError:
+        except ValueError as err:
             return render(
-                request, "app_travel/booking.html", {"error": "error"}, status=400
+                request, "app_travel/booking.html", {"error": f"{err}"}, status=400
             )
 
         booking = Booking(
@@ -32,11 +39,14 @@ def tour_booking(request, tour_id):
             adult_quantity=adult_quantity,
             children_quantity=children_quantity,
         )
-        booking.total_price = booking.adult_price(
-            tour_detail.price
-        ) + booking.children_price(tour_detail.price)
-        booking.save() - booking.discount
-        return redirect("app_booking:checkout")
+        booking.total_price = (
+            booking.adult_price(tour_detail.price)
+            + booking.children_price(tour_detail.price)
+            - booking.discount
+        )
+        booking.save() 
+        return redirect("app_booking:checkout",booking.id)
+
     return render(
         request,
         "app_travel/booking.html",
@@ -46,9 +56,14 @@ def tour_booking(request, tour_id):
 
 def checkout(request, booking_id):
     booking = Booking.objects.get(id=booking_id)
+    adult_price = booking.adult_price(booking.tour.price)
+    children_price = booking.children_price(booking.tour.price)
+    passenger_price = (adult_price) + (children_price)
+
     if request.POST.get("btnPayment"):
         booking.status = BookingStatus.PAID
         booking.save()
+
         email = booking.user.email
         name = booking.user.last_name + " " + booking.user.first_name
         tour = booking.tour.name
@@ -58,8 +73,8 @@ def checkout(request, booking_id):
         recipients = [email, sender]
         title = f"[Thông báo] {booking.id}"
         content = "<p> Chào bạn <strong>" + name + "</strong>,"
-        content += "<p> Advieture xác nhận hoàn tất thanh toán số tiền payment cho chuyến đi: </p>"
-        content += "<p>" + tour + "</p>"
+        content += f"<p> Advieture xác nhận hoàn tất thanh toán số tiền {payment} cho chuyến đi: </p>"
+        content += f"<p> {tour} </p>"
         content += "<p>Cảm ơn bạn đã tin tưởng Advieture</p>"
         msg = EmailMessage(title, content, sender, recipients)
         msg.content_subtype = "html"
@@ -69,7 +84,5 @@ def checkout(request, booking_id):
     return render(
         request,
         "app_travel/check-out.html",
-        {
-            "booking": booking,
-        },
+        {"booking": booking, "passenger_price": passenger_price},
     )

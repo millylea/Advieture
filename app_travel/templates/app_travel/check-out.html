@@ -1,6 +1,7 @@
 {% extends "app_travel/.base.html" %}
 {% load static %}
 {% load humanize %}
+{% load mathfilters %}
 {% block title_tab %} Tài khoản của tôi {% endblock %}
 
 {% block main_content %}
@@ -89,7 +90,7 @@
                                 <div style="font-weight: bold;"><i class="fa fa-angle-right text-primary mr-2"></i>Hành
                                     Khách</div>
                                 <span
-                                    style="font-weight: bold; color:red">{{booking.total_price|floatformat:0|intcomma}}</span>
+                                    style="font-weight: bold; color:red">{{passenger_price|floatformat:0|intcomma}}</span>
                             </li>
                             <li class="mb-3 d-flex justify-content-between align-items-center">
                                 <small class=" mr-2">Người lớn</small>
@@ -134,10 +135,3 @@
 {% endblock %}
 
 
-
-{% block page_script %}
-
-<script>
-    
-</script>
-{% endblock %}
