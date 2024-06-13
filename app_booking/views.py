@@ -19,6 +19,7 @@ def tour_booking(request, tour_id):
         try:
             adult_quantity = request.POST.get("adult_quantity")
             children_quantity = request.POST.get("children_quantity")
+            discount = request.POST.get("discount")
             if not adult_quantity.isdigit() or not children_quantity.isdigit():
                 raise ValueError("Nhập số lượng là số")
             adult_quantity = int(adult_quantity)
@@ -38,11 +39,12 @@ def tour_booking(request, tour_id):
             tour=tour_detail,
             adult_quantity=adult_quantity,
             children_quantity=children_quantity,
+            discount=discount,
         )
         booking.total_price = (
             booking.adult_total_price
             + booking.children_total_price
-            - booking.discount
+            - booking.discount_price
         )
         booking.save()
         name = request.POST.get("p_name")

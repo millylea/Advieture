@@ -31,6 +31,11 @@ class Booking(models.Model):
 
         return  self.tour.price/2 * self.children_quantity
 
+    @property
+    def discount_price(self):
+
+        return (self.adult_total_price + self.children_total_price)* self.discount / 100
+
     class Meta:
         ordering = ("-created_date",)
 
@@ -44,8 +49,12 @@ class Passenger(models.Model):
     phone = models.CharField(max_length=20, null=True)
     address = models.TextField(null=True, blank=True)
     birthday = models.DateField(null=True)
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Thông Tin Hành Khách"
 
 
-class BookingHistory(models.Model):
+class BookingManager(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
