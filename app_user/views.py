@@ -18,12 +18,29 @@ hasher = PBKDF2PasswordHasher()
 
 # Create your views here.
 def register(request):
+    if "s_user" in request.session:
+        return redirect("app_travel:index")
     categories = Category.objects.all()
     form_register = FormRegister()
     result_register = ""
     if request.POST.get("btnRegister"):
+
         form_register = FormRegister(request.POST, User)
+        if not form_register.is_valid():
+            msg = form_register.errors
+            return render(
+                request,
+                "app_travel/register.html",
+                {
+                    "result_register": msg,
+                    "form_register": form_register,
+                    "categories": categories,
+                },
+                status=400,
+            )
+
         if form_register.is_valid():
+
             if (
                 form_register.cleaned_data["password"]
                 == form_register.cleaned_data["confirm_password"]
@@ -39,12 +56,14 @@ def register(request):
                     form_register.cleaned_data["password"], salt
                 )
                 post.confirm_password = form_register.cleaned_data["confirm_password"]
+
                 post.save()
                 result_register = """
                 <div class="alert alert-success" role="alert">
                         Đăng Ký Tài Khoản Thành Công!
                 </div> """
-                return redirect("app_travel:login")
+                return redirect("app_user:login")
+
             else:
                 result_register = """
                 <div class="alert alert-danger" role="alert">

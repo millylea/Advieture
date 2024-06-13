@@ -18,6 +18,7 @@ class FormRegister(forms.ModelForm):
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Tên đăng nhập"}
         ),
+        error_messages={"invalid": "username đã tồn tại, đồ ngu"},
     )
 
     phone = forms.CharField(
@@ -30,6 +31,7 @@ class FormRegister(forms.ModelForm):
         widget=forms.EmailInput(
             attrs={"class": "form-control", "placeholder": "Email"}
         ),
+        error_messages={"invalid": "Your email address is incorrect"},
     )
 
     password = forms.CharField(
