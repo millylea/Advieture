@@ -5,10 +5,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import EmailMessage
 import markdown
 from datetime import datetime
+
 from app_travel.models import (
     Category,
     Promotions,
-    BackgroundSlider,
     Tour,
     Departure,
     Contact,
@@ -19,21 +19,18 @@ from app_travel.models import (
 def index(request):
     categories = Category.objects.all()
     promotions = Promotions.objects.all()
-    background_slider = BackgroundSlider.objects.all()
+
     tours = Tour.objects.all()
     departures = Departure.objects.all()
     popular_tours = tours.order_by("-booked")[0:6]
     affordable_tours = tours.order_by("price")[0:4]
 
-    for tour in tours:
-        print(tour.price)
     return render(
         request,
         "app_travel/index.html",
         {
             "categories": categories,
             "promotions": promotions,
-            "background_slider": background_slider,
             "tours": tours,
             "popular_tours": popular_tours,
             "affordable_tours": affordable_tours,
@@ -49,6 +46,8 @@ def about(request):
 
 def tours_list(request, category_id):
     categories = Category.objects.all()
+    departure = Departure.objects.all()
+
     tours = Tour.objects.filter(category_id=category_id)
     category_name = Category.objects.get(id=category_id).name
 
@@ -80,6 +79,7 @@ def tours_list(request, category_id):
             "elided_page_range": elided_page_range,
             "current_page": current_page,
             "tours_pager": tours_pager,
+            "departure": departure,
         },
     )
 
@@ -109,8 +109,8 @@ def tour_detail(request, tour_id):
 def search(request):
     categories = Category.objects.all()
     departures = Departure.objects.all()
-    departure_id = request.GET.get("departure_id")
-    category_id = request.GET.get("category_id")
+    departure_id = int(request.GET.get("departure_id"))
+    category_id = int(request.GET.get("category_id"))
     departure_date = request.GET.get("departure_date")
     keyword = request.GET.get("keyword")
 
@@ -140,6 +140,9 @@ def search(request):
         request,
         "app_travel/tours_list.html",
         {
+            "departure_id": departure_id,
+            "category_id": category_id,
+            "departure_date":departure_date,
             "categories": categories,
             "tours_pager": tours_pager,
             "category_name": category_name,
