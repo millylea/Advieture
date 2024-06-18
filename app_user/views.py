@@ -55,6 +55,7 @@ def register(request):
                 post.password = hasher.encode(
                     form_register.cleaned_data["password"], salt
                 )
+
                 post.confirm_password = form_register.cleaned_data["confirm_password"]
 
                 post.save()
@@ -90,6 +91,7 @@ def login(request):
         user = User.objects.filter(username=username, password=password)
         if user.count() > 0:
             dict_user = user.values().first()
+
             request.session["s_user"] = dict_user
             return redirect("app_travel:index")
         else:
@@ -114,7 +116,6 @@ def logout(request):
 
 
 def my_account(request):
-
     categories = Category.objects.all()
     dict_user = request.session["s_user"]
     user = User.objects.get(pk=request.session["s_user"]["id"])
@@ -152,13 +153,17 @@ def my_account(request):
     result_password = ""
     # change password
     if request.POST.get("btnChangePassword"):
-        password = request.POST.get("password")
-        if user.password == password:
-            new_password = request.POST.get("new_password")
-            confirm_password = request.POST.get("confirm_password")
+        hasher = PBKDF2PasswordHasher()
+        user_passw = User.objects.get(pk=request.session["s_user"]["id"])
+        current_password = hasher.encode(request.POST.get("current_password"), salt)
+        new_password = hasher.encode(request.POST.get("new_password"), salt)
+        confirm_password = hasher.encode(request.POST.get("confirm_password"), salt)
+        print(user_passw.password, current_password)
+        if user_passw.password == current_password:
+
             if new_password == confirm_password:
-                user.password = hasher.encode(new_password, salt)
-                user.save()
+                user_passw.password = new_password
+                user_passw.save()
                 result_password = """
                 <div class="alert alert-success" role="alert">
                         Mật khẩu đã được cập nhật
@@ -168,18 +173,31 @@ def my_account(request):
                 <div class="alert alert-danger" role="alert">
                         mật khẩu không khớp!
                 </div> """
-        else:
-            result_password = """
-                <div class="alert alert-danger" role="alert">
-                        sai mật khẩu!
-                </div> """
+ 
+
     # bookings
-    user = request.session["s_user"]
-    bookings = Booking.objects.filter(user=user["id"], status=BookingStatus.PAID)
+    user_id = request.session["s_user"]["id"]
+
+    bookings = Booking.objects.filter(user=user_id, status=BookingStatus.PAID)
 
     bookings_history = Booking.objects.filter(
-        user=user["id"], status=BookingStatus.COMPLETE
+        user=user_id, status=BookingStatus.COMPLETE
     )
+
+    payment_list = []
+    for pay in bookings:
+        payment_list.append(pay.total_price)
+    total_payment = sum(payment_list)
+    user_detail = User.objects.get(id=user_id)
+    if 5000000 < total_payment <= 20000000:
+        user_detail.member_class = "Hạng Vàng"
+        user_detail.save()
+    elif total_payment > 20000000:
+        user_detail.member_class = "Hạng Kim Cương"
+        user_detail.save()
+    else:
+        user_detail.member_class = "Hạng Bạc"
+        user_detail.save()
 
     return render(
         request,

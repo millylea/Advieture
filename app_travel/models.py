@@ -15,6 +15,8 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    class Meta:
+        verbose_name_plural ="Danh Mục Tour Nội Địa"
 
 
 class Departure(models.Model):
@@ -22,6 +24,9 @@ class Departure(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "Khởi Hành"
 
 
 class Tour(models.Model):
@@ -48,6 +53,9 @@ class Tour(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Danh sách Tour"
+
 
 class Contact(models.Model):
     name = models.CharField(max_length=150)
@@ -60,6 +68,9 @@ class Contact(models.Model):
     def __str__(self):
         return self.subject
 
+    class Meta:
+        verbose_name_plural = "Liên hệ"
+
 
 class Promotions(models.Model):
     name = models.CharField(max_length=250, unique=True)
@@ -70,6 +81,9 @@ class Promotions(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "Ưu Đãi"
 
 
 class BackgroundSlider(models.Model):

@@ -1,4 +1,5 @@
 import os
+
 """
 Django settings for Travelsite project.
 
@@ -71,7 +72,6 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
-           
         },
     },
 ]

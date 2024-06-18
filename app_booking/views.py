@@ -12,14 +12,15 @@ from app_user.views import *
 def tour_booking(request, tour_id):
     categories = Category.objects.all()
     tour_detail = Tour.objects.get(id=tour_id)
-
     user_id = request.session.get("s_user")["id"]
     user = User.objects.get(pk=user_id)
+
     if request.POST.get("btnCheckout"):
         try:
             adult_quantity = request.POST.get("adult_quantity")
             children_quantity = request.POST.get("children_quantity")
-            discount = request.POST.get("discount")
+            discount = int(request.POST.get("discount"))
+
             if not adult_quantity.isdigit() or not children_quantity.isdigit():
                 raise ValueError("Nhập số lượng là số")
             adult_quantity = int(adult_quantity)
@@ -28,12 +29,11 @@ def tour_booking(request, tour_id):
                 raise ValueError("Số lượng Người Lớn ít nhất là 1 ")
             if children_quantity < 0:
                 raise ValueError("Số lượng phải là số dương")
-
         except ValueError as err:
             return render(
                 request, "app_travel/booking.html", {"error": f"{err}"}, status=400
             )
-
+        
         booking = Booking(
             user=user,
             tour=tour_detail,
@@ -68,12 +68,13 @@ def checkout(request, booking_id):
 
     if request.POST.get("btnPayment"):
         booking.status = BookingStatus.PAID
+        booking.tour.booked += 1
         booking.save()
 
         email = booking.user.email
         name = booking.user.last_name + " " + booking.user.first_name
         tour = booking.tour.name
-        payment = booking.total_price
+        payment = "{:,}".format(booking.total_price)
         # Automatic Email
         sender = settings.EMAIL_HOST_USER
         recipients = [email, sender]

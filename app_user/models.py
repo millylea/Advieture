@@ -17,7 +17,7 @@ class User(models.Model):
     )
     address = models.TextField(null=True, blank=True)
     password = models.CharField(max_length=250)
-    member_class = models.CharField(max_length=150, default="Hạng Đồng")
+    member_class = models.CharField(max_length=150, blank=True, default="Hạng Đồng")
 
     def __str__(self) -> str:
         return self.username

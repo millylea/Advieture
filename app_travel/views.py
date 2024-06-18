@@ -46,7 +46,7 @@ def about(request):
 
 def tours_list(request, category_id):
     categories = Category.objects.all()
-    departure = Departure.objects.all()
+    departures = Departure.objects.all()
 
     tours = Tour.objects.filter(category_id=category_id)
     category_name = Category.objects.get(id=category_id).name
@@ -79,7 +79,7 @@ def tours_list(request, category_id):
             "elided_page_range": elided_page_range,
             "current_page": current_page,
             "tours_pager": tours_pager,
-            "departure": departure,
+            "departures": departures,
         },
     )
 
