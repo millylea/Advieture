@@ -1,6 +1,6 @@
 {% extends "app_travel/.base.html" %}
 {% load static %}
-{% load my_templatetags %}
+
 {% load humanize %}
 {% load mathfilters %}
 {% block title_tab %} Tài khoản của tôi {% endblock %}
@@ -17,11 +17,9 @@
                     <!-- <img src="user/img/user.jpg" class="img-fluid mx-auto mb-3" style="width: 100px;"> -->
                     <h3 class="text-primary mb-3">{{user.last_name}} {{user.first_name}}</h3>
                     <div>
-                        Hạng Vàng
+                        {{user.member_class}}
                     </div>
-                    <div class="mt-3">
-                        Điểm Tích Lũy:
-                    </div>
+                    
                 </div>
 
                 <!-- Booked Tours -->
@@ -48,7 +46,7 @@
                         <ul class="nav flex-column nav-tabs" aria-orientation="vertical">
                             <li><a data-toggle="tab" href="#personal_detail"><i
                                         class="fa fa-angle-right text-primary mr-2"></i>Thông tin cá nhân</a></li>
-                            <li><a data-toggle="tab" href="#change_password">Đổi mật khẩu</a></li>
+                            <li><a data-toggle="tab" href="#change_password"><i class="fa fa-angle-right text-primary mr-2"></i>Đổi mật khẩu</a></li>
                             <li class="pt-2"><a href="{% url 'app_user:logout' %}"><i
                                         class="fas fa-sign-out-alt mr-2"></i>Đăng Xuất</a></li>
                         </ul>
@@ -127,29 +125,29 @@
                                         </div>
 
                                     </form>
-                                </div> {% endwith %}
+                                </div> 
                                 <!-- Change Password -->
                                 <div id="change_password" class="tab-pane fade">
                                     <h4> Thay Đổi Mật Khẩu</h4>
-                                    {{result_password|safe}}
+                                    <div>{{result_password|safe}}</div>
                                     <form method="post">
                                         {% csrf_token %}
                                         <div class="row">
 
                                             <div class="col-md-12 pb-2">
                                                 <label>Nhập mật khẩu cũ</label>
-                                                <input class="form-control" type="text" value="" name="password">
+                                                <input class="form-control" type="password"  name="current_password">
                                             </div>
 
 
                                             <div class="col-md-12 pb-2">
                                                 <label>Nhập mật khẩu mới</label>
-                                                <input class="form-control" type="text" value="" name="new_password">
+                                                <input class="form-control" type="password"  name="new_password">
                                             </div>
 
                                             <div class="col-md-12 pb-2">
                                                 <label>Nhập lại mật khẩu mới</label>
-                                                <input class="form-control" type="text" value=""
+                                                <input class="form-control" type="password" 
                                                     name="confirm_password">
                                             </div>
 
@@ -163,6 +161,7 @@
                                         </div>
                                     </form>
                                 </div>
+                                {% endwith %}
                                 <!-- booked tour detail -->
                                 <div id="coming-tour" class="tab-pane fade in active">
                                     {% if bookings|length > 0 %}
@@ -338,18 +337,20 @@
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <div style="font-weight: bold;"><i class="fa fa-angle-right text-primary mr-2"></i>Hành
                             Khách</div>
-                        <span style="font-weight: bold; color:red"> {{booking.adult_price|add:booking.children_price|floatformat:0|intcomma}} </span>
+                        <span style="font-weight: bold; color:red"> {{booking.adult_total_price|add:booking.children_total_price|floatformat:0|intcomma}} </span>
                     </li>
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <small class=" mr-2">Người lớn</small>
                         <small style="font-weight: bold;">{{booking.adult_quantity}} x
                             {{booking.tour.price|floatformat:0|intcomma}}</small>
                     </li>
+                    {% if booking.children_quantity > 0 %}
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <small class=" mr-2">Trẻ Em</small>
                         <small style="font-weight: bold;">{{booking.children_quantity}} x
                             {{booking.tour.children_price|floatformat:0|intcomma}}</small>
                     </li>
+                    {% endif %}
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <div style="font-weight: bold;"><i class="fa fa-angle-right text-primary mr-2"></i>Giảm
                             Giá</div>
@@ -368,7 +369,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary">Tải PDF</button>
             </div>
         </div>
     </div>
@@ -390,22 +390,26 @@
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <div style="font-weight: bold;"><i class="fa fa-angle-right text-primary mr-2"></i>Hành
                             Khách</div>
-                        <span style="font-weight: bold; color:red"> {{booking.adult_price|add:booking.children_price|floatformat:0|intcomma}} </span>
+                        <span style="font-weight: bold; color:red"> {{booking.adult_total_price|add:booking.children_total_price|floatformat:0|intcomma}} </span>
                     </li>
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <small class=" mr-2">Người lớn</small>
                         <small style="font-weight: bold;">{{booking.adult_quantity}} x
                             {{booking.tour.price|floatformat:0|intcomma}}</small>
                     </li>
+                    {% if booking.children_quantity > 0 %}
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <small class=" mr-2">Trẻ Em</small>
+                        
                         <small style="font-weight: bold;">{{booking.children_quantity}} x
                             {{booking.tour.children_price|floatformat:0|intcomma}}</small>
+                        
                     </li>
+                    {% endif %}
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <div style="font-weight: bold;"><i class="fa fa-angle-right text-primary mr-2"></i>Giảm
                             Giá</div>
-                        <span style="font-weight: bold;color:red">{{booking.discount}}</span>
+                        <span style="font-weight: bold;color:red">{{booking.discount}}%</span>
                     </li>
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <small class=" mr-2">voucher</small>
@@ -417,10 +421,11 @@
                         </div>
                         <span style="font-weight: bold; color:red">{{booking.total_price|floatformat:0|intcomma}}</span>
                     </li>
+                </ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary">Tải PDF</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'app_user:export_payment_to_pdf' booking.pk  %}'">Tải PDF</button>
             </div>
         </div>
     </div>

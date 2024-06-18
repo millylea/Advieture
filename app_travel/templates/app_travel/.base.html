@@ -93,7 +93,7 @@
                         <a href="{% url 'app_user:login' %}" class="nav-item nav-link">Đăng Nhập</a>
                         {% else %}
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i
+                            <a href="{% url 'app_user:my_account' %}" class="nav-link dropdown-toggle" data-toggle="dropdown"><i
                                     class="fas fa-user mr-1"></i> {{user.last_name}} {{user.first_name}}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">

@@ -15,38 +15,52 @@
             <div class="side-bar">
                 <div class="search-bar">
                     <form class="input-group" method="get" action="{% url 'app_travel:search' %}">
-                        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                        <input type="search" class="form-control rounded" placeholder="Tìm Kiếm" aria-label="Search"
                             aria-describedby="search-addon" name="keyword" autocomplete="off" value="" />
                         <button type="submit" class="btn btn-primary" data-mdb-ripple-init>
                             <small><i class="fas fa-search" aria-hidden="true"></i></small>
                         </button>
                     </form>
                 </div>
-                <select class="custom-select px-4" style="height: 40px; margin-top: 30px;">
-                    <option selected>Destination</option>
-                    <option value="1">Destination 1</option>
-                    <option value="2">Destination 1</option>
-                    <option value="3">Destination 1</option>
-                </select>
-                <select class="custom-select px-4" style="height: 40px; margin-top: 30px;">
-                    <option selected>Destination</option>
-                    <option value="1">Destination 1</option>
-                    <option value="2">Destination 1</option>
-                    <option value="3">Destination 1</option>
-                </select>
-                <div class="sidebar-widget category">
-                    <h2 class="title">Category</h2>
-                    <nav class="navbar bg-light">
-                        <ul class="navbar-nav">
-                            {% for category in categories %}
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                    href="{% url 'app_travel:tours_list' category.pk %}">{{category.name}}</a>
-                            </li>
+                <div class="text-center mt-4"> ---Bộ lọc tìm kiếm---</div>
+                <form action="" method="get" action="{% url 'app_travel:search' %}" id="tourform">
+                    <div class=" mt-4">
+                        <select class="custom-select px-4" name="departure_id" id="departure_id" form="tourform"
+                            style="height: 47px;">
+                            <option value=""><small>Khởi Hành Từ</small></option>
+                            {% for departure_location in departures %}
+                            <option value="{{departure_location.id}}" 
+                            
+                            {% if departure_location.id == departure_id %} 
+                            selected 
+                            {% endif %}>
+                            
+                            {{departure_location}}</option>
                             {% endfor %}
-                        </ul>
-                    </nav>
-                </div>
+                        </select>
+                    </div>
+                    <div class=" mt-4">
+                        <select class="custom-select px-4" name="category_id" id="category_id" form="tourform"
+                            style="height: 47px;">
+                            <option value="">Nơi Đến</option>
+                            {% for category in categories %}
+                            <option value="{{category.id}}" {% if category.id == category_id %} 
+                            selected 
+                            {% endif %}>
+                            {{category}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="date mt-4" data-target-input="nearest">
+                        <input type="text" id="departure_date" name="departure_date" class="form-control p-4"
+                            placeholder="Ngày khởi hành" data-target="#date1" data-toggle="datetimepicker" value="{{departure_date}}" />
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary" type="submit" style="height: 47px; margin-top: -2px;">Tìm
+                            chuyến đi</button>
+                    </div>
+                </form>
+
 
 
             </div>
@@ -54,7 +68,7 @@
         <div class="col-md-9">
             <div class="main-tours">
                 <div class="text-center mb-3 pb-3">
-                    <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Packages</h6>
+
                     <h3>{{category_name}}</h3>
                 </div>
                 <div class="row">
@@ -65,13 +79,15 @@
                                     src="{{tour.image.url}}" alt=""></a>
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>{{tour.category.name}}</small>
+                                    <small class="m-0"><i
+                                            class="fa fa-map-marker-alt text-primary mr-2"></i>{{tour.category.name}}</small>
                                     <small class="m-0"><i
                                             class="fa fa-calendar-alt text-primary mr-2"></i>{{tour.days}}</small>
                                     <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1</small>
                                 </div>
                                 <div class="package-item-name">
-                                    <a class=" text-decoration-none" href="{% url 'app_travel:tour_detail' tour.pk %}">{{tour.name|truncatechars:75}}</a>
+                                    <a class=" text-decoration-none"
+                                        href="{% url 'app_travel:tour_detail' tour.pk %}">{{tour.name|truncatechars:75}}</a>
                                 </div>
                                 <div class="border-top mt-4 pt-4">
                                     <div class="d-flex justify-content-between">
@@ -80,7 +96,8 @@
 
                                         </div>
                                         <div class="booking-button">
-                                            <a> <button >Đặt Ngay</button></a>
+                                            <a href="{% url 'app_booking:tour_booking' tour.pk %}"> <button>Đặt
+                                                    Ngay</button></a>
                                         </div>
                                     </div>
                                 </div>
@@ -95,36 +112,37 @@
                     <ul class="pagination justify-content-center">
                         {% if tours_pager.has_previous %}
                         <li class="page-item disabled">
-                            <a class="page-link" href="?page={{tours_pager.previous_page_number}}" tabindex="-1">Trước</a>
+                            <a class="page-link" href="?page={{tours_pager.previous_page_number}}"
+                                tabindex="-1">Trước</a>
                         </li>
                         {% endif %}
-                        
+
                         {% for page_num in elided_page_range %}
                         {% if page_num == '…' %}
                         <li class="page-item"><a class="page-link">{{page_num}}</a>
                         </li>
                         {% else %}
-                        <li class="{% if page_num == current_page %}page-item active{%else%}page-item{%endif%}"><a class="page-link"
-                                href="?page={{page_num}}">{{page_num}}</a>
-                        
+                        <li class="{% if page_num == current_page %}page-item active{%else%}page-item{%endif%}"><a
+                                class="page-link" href="?page={{page_num}}">{{page_num}}</a>
+
                         </li>
                         {% endif %}
                         {% endfor %}
-                        
+
                         {% if tours_pager.has_next %}
                         <li class="page-item">
                             <a class="page-link" href="?page={{tours_pager.next_page_number}}">Sau</a>
                         </li>
                         {% endif %}
+            </div>
         </div>
+
     </div>
-
-</div>
-<!-- Packages End -->
+    <!-- Packages End -->
 
 
 
-<!-- Destination Start -->
+    <!-- Destination Start -->
 
 
-{% endblock %}
+    {% endblock %}

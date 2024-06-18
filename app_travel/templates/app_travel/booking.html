@@ -16,7 +16,7 @@
                     <div class="d-flex mb-3">
                         <div class="">
                             <h4>Thông tin Liên Lạc</h4>
-                            
+
                             {{result_update|safe}}
                             {% with user=request.session.s_user %}
                             {% if not user %}
@@ -31,7 +31,7 @@
                                         <label class="text-dark">Tên</label>
                                         <input class="form-control" type="text" value="" name="first_name">
                                     </div>
-                            
+
                                     <div class="col-md-6 pb-2">
                                         <label class="text-dark">Số Điện Thoại</label>
                                         <input class="form-control" type="text" value="" name="phone">
@@ -68,7 +68,7 @@
                                     </div>
                                     <div class="col-md-6 pb-2">
                                         <label class="text-dark">Email:</label>
-                                    <p><strong>{{user.email}}</strong> </p>
+                                        <p><strong>{{user.email}}</strong> </p>
                                     </div>
                                     <div class="col-md-12 pb-1">
                                         <label class="text-dark">Địa Chỉ:</label>
@@ -76,7 +76,7 @@
                                     </div>
                                     <div class="col-md-12 pb-2">
                                         <div class="text-center">
-                                         
+
                                             <a href="{% url 'app_user:my_account' %}"> Cập Nhật
                                             </a>
                                         </div>
@@ -91,48 +91,52 @@
                     </div>
                     <div class="d-flex mb-3">
                         <form method="post">
-                        
+
                             <div class="">
                                 <h4>Thông tin Hành Khách</h4>
-                                
-                                    {% csrf_token %}
-                                    <div class="row">
-                                        <div class="col-md-12 pb-2">
-                                            <label class="text-dark">Họ và Tên Khai Sinh</label>
-                                            <input class="form-control" type="text" value="" name="name">
-                                        </div>
 
-                                       
-                                        <div class="col-md-6 pb-2">
-                                            <label class="text-dark">Ngày tháng năm sinh</label>
-                                            <div class="row">
-                                                <div class="col-sm-12"><input class="form-control" type="text" value=""
-                                                        name="birth_day"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 pb-2">
-                                            <label class="text-dark">Số Điện Thoại Liên Lạc</label>
-                                            <input class="form-control" type="text" value="{{user.phone}}" name="phone">
-                                        </div>
-
-                                        <div class="col-md-12 pb-2">
-                                            <label class="text-dark">Địa Chỉ</label>
-                                            <input class="form-control" type="text" value="{{user.address}}" name="address">
-                                        </div>
-
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-12 pb-2">
+                                        <label class="text-dark">Họ và Tên Khai Sinh</label>
+                                        <input class="form-control" type="text" value="" name="p_name">
                                     </div>
-    
+
+                                    <div class="col-md-6 pb-2">
+                                        <label class="text-dark">Năm sinh</label>
+                                        <div class="row">
+                                            <div class="col-sm-12"><input class="form-control" type="text" value=""
+                                                    name="p_birthday"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pb-2">
+                                        <label class="text-dark">Số Điện Thoại Liên Lạc</label>
+                                        <input class="form-control" type="text" value="{{user.phone}}" name="p_phone">
+                                    </div>
+
+                                    <div class="col-md-12 pb-2">
+                                        <label class="text-dark">Địa Chỉ</label>
+                                        <input class="form-control" type="text" value="{{user.address}}" name="p_address">
+                                    </div>
+
+                                </div>
+
                             </div>
                             <div class="row mt-3" style="border: 1px solid #eee">
-                            
+
                                 <div class="col-md-6">
                                     <div class="row">
                                         <h5 class="mr-3">Người lớn</h5>
                                         <div class="qty">
-                                            <button type="button" class="btn-minus"><i class="fas fa-minus"></i></button>
-                                            <input class="adult_quantity" style="width:30px; text-align: center;" type="text"
+                                            <button id="btn_adult_sub" type="button" class="btn-minus">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input class="adult_quantity" id="adult_quantity_input"
+                                                style="width:30px; text-align: center;" type="text"
                                                 value="{{adult_quantity}}" name="adult_quantity">
-                                            <button type="button" class="btn-plus"><i class="fas fa-plus"></i></button>
+                                            <button id="btn_adult_add" type="button" class="btn-plus">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -140,18 +144,32 @@
                                     <div class="row">
                                         <h5 class="mr-3">Trẻ em</h5>
                                         <div class="qty">
-                                            <button type="button" class="btn-minus"><i class="fas fa-minus"></i></button>
-                                            <input class="children_quantity" style="width:30px; text-align: center;" type="text"
+                                            <button id="btn_children_sub" type="button" class="btn-minus">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input class="children_quantity" id="children_quantity_input"
+                                                style="width:30px; text-align: center;" type="text"
                                                 value="{{children_quantity}}" name="children_quantity">
-                                            <button type="button" class="btn-plus"><i class="fas fa-plus"></i></button>
+                                            <button type="button" id="btn_children_add" class="btn-plus">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-3">
+                                    <div class="row">
+                                        <h5 class="mr-3">
+                                            Nhập mã giảm giá
+                                        </h5>
+                                        <input name="discount" value="0"  type="text" placeholder="Nhập mã giảm giá">
                                     </div>
                                 </div>
                             </div>
                             {% if error %}
                             <div>{{error}}</div>
                             {% endif %}
-                            <div class="booking-button mt-5 text-center"><a href=""><button class="btn" type="submit" name="btnCheckout" value="Tiến Hành Đặt"> Tiến
+                            <div class="booking-button mt-5 text-center"><a href=""><button class="btn" type="submit"
+                                        name="btnCheckout" value="Tiến Hành Đặt"> Tiến
                                         Hành Đặt </button></a></div>
                         </form>
                     </div>
@@ -160,21 +178,22 @@
             <!-- Blog Detail End -->
 
             <!-- Comment List Start -->
-        </div>  
+        </div>
         <div class="col-lg-4 mt-5 mt-lg-0">
             <!-- User Bio -->
             <h4 class=" mb-3">Tóm tắt tour</h4>
             <div class="d-flex flex-column text-center bg-white mb-3 py-5 ">
                 <!-- <img src="user/img/user.jpg" class="img-fluid mx-auto mb-3" style="width: 100px;"> -->
-                
+
                 <div class="bg-white" style="padding: 10px;">
                     <div class="pb-3">
-                        <img style="width:200px;height:100px" src="{{tour_detail.image.url}}" alt="{{tour_detail.name}}"> 
+                        <img style="width:200px;height:100px" src="{{tour_detail.image.url}}"
+                            alt="{{tour_detail.name}}">
                     </div>
                     <ul class="list-inline m-0">
                         <li class="mb-3 d-flex justify-content-between align-items-center">
-                            <div  style="font-weight: bold">{{tour_detail.name}}</div>
-                         
+                            <div style="font-weight: bold">{{tour_detail.name}}</div>
+
                         </li>
                         <li class="mb-3 d-flex justify-content-between align-items-center">
                             <div><i class="fa fa-angle-right text-primary mr-2"></i>Khởi hành từ</div>
@@ -182,7 +201,7 @@
                         </li>
                         <li class="mb-3 d-flex justify-content-between align-items-center">
                             <div><i class="fa fa-angle-right text-primary mr-2"></i>Ngày khởi hành</div>
-                            <span style="font-weight: bold;">150</span>
+                            <span style="font-weight: bold;">{{tour_detail.departure_date|date:"d-m-Y"}}</span>
                         </li>
                         <li class="mb-3 d-flex justify-content-between align-items-center">
                             <div><i class="fa fa-angle-right text-primary mr-2"></i> Thời gian</div>
@@ -196,13 +215,13 @@
                             <div><i class="fa fa-angle-right text-primary mr-2"></i> Nghỉ ngơi</div>
                             <span style="font-weight: bold;">{{tour_detail.acommondation}}</span>
                         </li>
-                        
+
                     </ul>
                 </div>
             </div>
 
 
-   
+
             <!-- Search Form -->
             <div class="mb-5">
                 <div class="bg-white" style="padding: 30px;">
@@ -229,4 +248,70 @@
 <!-- Blog End -->
 
 
+{% endblock %}
+
+
+{% block page_script %}
+<script>
+
+    function isNumeric(value) {
+        return /^-?\d+$/.test(value);
+    }
+
+    function setDefaultValues() {
+        // set default value for adult input.
+        $('#adult_quantity_input').val(1)
+        $('#children_quantity_input').val(0)
+    }
+
+    function getOldValue(input) {
+        let oldValue = input.val();
+        if (!isNumeric(oldValue)) {
+            setDefaultValues();
+            return;
+        }
+        return oldValue;
+    }
+
+    function add(input, button) {
+        let oldValue = getOldValue(input);
+        oldValue = parseInt(oldValue)
+        newValue = oldValue + 1;
+        input.val(newValue)
+    }
+    function sub(input, button) {
+        let oldValue = getOldValue(input);
+        oldValue = parseInt(oldValue);
+        newValue = oldValue - 1;
+        if (newValue <= 1) newValue = 1;
+        input.val(newValue)
+    }
+
+
+    $(document).ready(function () {
+        $('a[data-toggle="tab"][href="#coming-tour"]').trigger('click');
+        setDefaultValues();
+
+
+        let childrenInput = $('#children_quantity_input');
+        let adultInput = $('#adult_quantity_input');
+
+        // for adult
+        $("#btn_adult_sub").on('click', function () {
+            sub(adultInput, $('#adult_quantity_sub'))
+        })
+        $("#btn_adult_add").on('click', function () {
+            add(adultInput, $('#adult_quantity_add'))
+        })
+
+        // for children
+        $("#btn_children_sub").on('click', function () {
+            sub(childrenInput, $('#children_quantity_sub'))
+        })
+        $("#btn_children_add").on('click', function () {
+            add(childrenInput, $('#children_quantity_add'))
+        })
+
+    })
+</script>
 {% endblock %}

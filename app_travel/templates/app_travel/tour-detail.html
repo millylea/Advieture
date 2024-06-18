@@ -27,8 +27,6 @@
                     </div>
                 </div>
                 <!-- Blog Detail End -->
-
-
             </div>
 
             <div class="col-lg-4 mt-5 mt-lg-0">
@@ -39,7 +37,7 @@
                         
                     </div>
                     <div class="booking-button mb-3">
-                        <a> <button>Đặt Ngay</button></a>
+                        <a  href="{% url 'app_booking:tour_booking' tour_detail.pk %}"> <button>Đặt Ngay</button></a>
                     </div>
                     <div>
                         <a href=""> <button style="background-color: white;">Liên Hệ Tư Vấn</button> </a>
@@ -137,7 +135,7 @@
                             
                                 </div>
                                 <div class="booking-button">
-                                    <a> <button>Đặt Ngay</button></a>
+                                    <a href="{% url 'app_booking:tour_booking' suggested_tour.pk %}"> <button>Đặt Ngay</button></a>
                                 </div>
                             </div>
                         </div>

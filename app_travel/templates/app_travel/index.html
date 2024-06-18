@@ -62,7 +62,12 @@
                                     style="height: 47px;">
                                     <option value="">Khởi Hành Từ</option>
                                     {% for departure_location in departures %}
-                                    <option value="{{departure_location.id}}">{{departure_location}}</option>
+                                        <option value="{{departure_location.id}}"
+                                            {% if departure_location.id == departure_id %}
+                                                selected
+                                            {% endif %}>
+                                            {{departure_location}}
+                                        </option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -73,7 +78,12 @@
                                     style="height: 47px;">
                                     <option value="">Nơi Đến</option>
                                     {% for category in categories %}
-                                    <option value="{{category.id}}">{{category}}</option>
+                                    <option value="{{category.id}}"
+                                        {% if category.id == category_id %}
+                                        selected
+                                        {% endif %}>
+                                        {{category}}
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -223,7 +233,7 @@
 </div>
 
 
-<!-- Team Start -->
+
 
 <!-- Feature Start -->
 <div class="container-fluid pb-5">
