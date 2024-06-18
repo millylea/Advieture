@@ -39,12 +39,8 @@ def index(request):
     )
 
 
-def about(request):
-
-    return render(request, "app_travel/about.html")
-
-
 def tours_list(request, category_id):
+
     categories = Category.objects.all()
     departures = Departure.objects.all()
 
@@ -106,11 +102,19 @@ def tour_detail(request, tour_id):
     )
 
 
+def int_or_none(kw):
+    try:
+        out = int(kw)
+        return out
+    except ValueError:
+        return None
+
+
 def search(request):
     categories = Category.objects.all()
     departures = Departure.objects.all()
-    departure_id = int(request.GET.get("departure_id"))
-    category_id = int(request.GET.get("category_id"))
+    departure_id = request.GET.get("departure_id")
+    category_id = request.GET.get("category_id")
     departure_date = request.GET.get("departure_date")
     keyword = request.GET.get("keyword")
 
@@ -136,13 +140,15 @@ def search(request):
         category_name = f"Tìm thấy {count} tour"
     else:
         category_name = "Không tìm thấy tour nào"
+    
+    
     return render(
         request,
         "app_travel/tours_list.html",
         {
-            "departure_id": departure_id,
-            "category_id": category_id,
-            "departure_date":departure_date,
+            "departure_id": int_or_none(departure_id),
+            "category_id": int_or_none(category_id),
+            "departure_date": departure_date,
             "categories": categories,
             "tours_pager": tours_pager,
             "category_name": category_name,

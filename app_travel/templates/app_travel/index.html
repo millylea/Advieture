@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-primary btn-block" type="submit"
+                            <button class="btn btn-primary btn-block" type="submit" name="btnFilter"
                                 style="height: 47px; margin-top: -2px;">Tìm
                                 Kiếm</button>
                         </div>
@@ -103,7 +103,7 @@
                     <form class="input-group" method="get" action="{% url 'app_travel:search' %}">
                         <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
                             aria-describedby="search-addon" name="keyword" autocomplete="off" value="" />
-                        <button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+                        <button type="submit" class="btn btn-primary" name="btnKeyword" data-mdb-ripple-init>
                             <small><i class="fas fa-search" aria-hidden="true"></i></small>
                         </button>
                     </form>

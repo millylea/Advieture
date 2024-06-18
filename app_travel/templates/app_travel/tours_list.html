@@ -23,7 +23,7 @@
                     </form>
                 </div>
                 <div class="text-center mt-4"> ---Bộ lọc tìm kiếm---</div>
-                <form action="" method="get" action="{% url 'app_travel:search' %}" id="tourform">
+                <form  method="get" action="{% url 'app_travel:search' %}" id="tourform">
                     <div class=" mt-4">
                         <select class="custom-select px-4" name="departure_id" id="departure_id" form="tourform"
                             style="height: 47px;">
@@ -56,7 +56,7 @@
                             placeholder="Ngày khởi hành" data-target="#date1" data-toggle="datetimepicker" value="{{departure_date}}" />
                     </div>
                     <div class="text-center mt-4">
-                        <button class="btn btn-primary" type="submit" style="height: 47px; margin-top: -2px;">Tìm
+                        <button class="btn btn-primary" type="submit"  style="height: 47px; margin-top: -2px;">Tìm
                             chuyến đi</button>
                     </div>
                 </form>
