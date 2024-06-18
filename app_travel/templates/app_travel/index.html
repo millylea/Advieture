@@ -62,12 +62,9 @@
                                     style="height: 47px;">
                                     <option value="">Khởi Hành Từ</option>
                                     {% for departure_location in departures %}
-                                        <option value="{{departure_location.id}}"
-                                            {% if departure_location.id == departure_id %}
-                                                selected
-                                            {% endif %}>
-                                            {{departure_location}}
-                                        </option>
+                                    <option value="{{departure_location.id}}">
+                                        {{departure_location}}
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -78,10 +75,7 @@
                                     style="height: 47px;">
                                     <option value="">Nơi Đến</option>
                                     {% for category in categories %}
-                                    <option value="{{category.id}}"
-                                        {% if category.id == category_id %}
-                                        selected
-                                        {% endif %}>
+                                    <option value="{{category.id}}">
                                         {{category}}
                                     </option>
                                     {% endfor %}
@@ -92,8 +86,8 @@
                             <div class="mb-3 mb-md-0">
                                 <div class="date" data-target-input="nearest">
                                     <input type="text" id="departure_date" name="departure_date"
-                                        class="form-control p-4" placeholder="Depart Date" data-target="#date1"
-                                        data-toggle="datetimepicker" />
+                                        value="{{departure_date}}" class="form-control p-4" placeholder="Depart Date"
+                                        data-target="#date1" data-toggle="datetimepicker" />
                                 </div>
                             </div>
                         </div>
@@ -219,12 +213,14 @@
             </div>
             <div class="col-lg-3">
                 <div class="card-body">
-                    
-                    
+
+
                     <div class="affordable-price-title">Giá chỉ từ </div>
                     <div class="affordable-price">{{tour.price|floatformat:0|intcomma}}<span>đ</span></div>
-                    <div class="booking-button"><a href="{% url 'app_booking:tour_booking' tour.pk %}"><button class="btn" type="submit" name="btnBookNow" value="Đặt Ngay"> Đặt Ngay</button></a></div>
-                    
+                    <div class="booking-button"><a href="{% url 'app_booking:tour_booking' tour.pk %}"><button
+                                class="btn" type="submit" name="btnBookNow" value="Đặt Ngay"> Đặt Ngay</button></a>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -240,8 +236,9 @@
     <div class="container pb-5" style="margin-top:50px; height:20px">
         <div class="text-center mb-3 pb-3">
             <h2 class="text-primary text-uppercase" style="letter-spacing: 5px;">
-            <span class="text-dark">Ad</span>Vieture</h2>
-        </div>  
+                <span class="text-dark">Ad</span>Vieture
+            </h2>
+        </div>
         <div class="row mb-5">
             <div class="col-md-4">
                 <div class="d-flex mb-4 mb-lg-0">
@@ -250,9 +247,9 @@
                         <i class="fa fa-2x fa-money-check-alt text-white"></i>
                     </div>
                     <div class="d-flex flex-column">
-                        
-                        <div style="font-weight: bold;font-size:20px"> Giá Tốt</div> 
-                        
+
+                        <div style="font-weight: bold;font-size:20px"> Giá Tốt</div>
+
                     </div>
                 </div>
             </div>
@@ -264,7 +261,7 @@
                     </div>
                     <div class="d-flex flex-column">
                         <div style="font-weight: bold;font-size:20px"> Dịch Vụ Chất Lượng</div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -276,7 +273,7 @@
                     </div>
                     <div class="d-flex flex-column">
                         <div style="font-weight: bold;font-size:20px"> Đa Dạng Tour</div>
-                       
+
                     </div>
                 </div>
             </div>
