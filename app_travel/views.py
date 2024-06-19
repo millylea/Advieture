@@ -103,6 +103,8 @@ def tour_detail(request, tour_id):
 
 
 def int_or_none(kw):
+    if kw is None:
+        return None
     try:
         out = int(kw)
         return out
