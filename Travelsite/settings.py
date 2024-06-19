@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     "ckeditor",
     "ckeditor_uploader",
     "mathfilters",
+    "rest_framework",
     "app_travel",
     "app_user",
     "app_booking",
+    "app_API",
 ]
 
 MIDDLEWARE = [

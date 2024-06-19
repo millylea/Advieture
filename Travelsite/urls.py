@@ -26,6 +26,7 @@ urlpatterns = [
     path("", include("app_travel.urls")),
     path("", include("app_user.urls")),
     path("", include("app_booking.urls")),
+    path("", include("app_API.urls")),
     re_path("^ckeditor/", include("ckeditor_uploader.urls")),
 ]
 

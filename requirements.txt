@@ -1,0 +1,14 @@
+# pip install -r requirements.txt
+# pip install -r requirements.txt --upgrade
+Django
+django-ckeditor
+pymysql
+bcrypt
+django[argon2]
+django-mathfilters
+pdfkit
+pillow
+djangorestframework
+markdown
+pandas
+mlxtend
