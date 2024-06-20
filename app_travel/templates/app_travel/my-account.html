@@ -19,7 +19,7 @@
                     <div>
                         {{user.member_class}}
                     </div>
-                    
+
                 </div>
 
                 <!-- Booked Tours -->
@@ -46,7 +46,8 @@
                         <ul class="nav flex-column nav-tabs" aria-orientation="vertical">
                             <li><a data-toggle="tab" href="#personal_detail"><i
                                         class="fa fa-angle-right text-primary mr-2"></i>Thông tin cá nhân</a></li>
-                            <li><a data-toggle="tab" href="#change_password"><i class="fa fa-angle-right text-primary mr-2"></i>Đổi mật khẩu</a></li>
+                            <li><a data-toggle="tab" href="#change_password"><i
+                                        class="fa fa-angle-right text-primary mr-2"></i>Đổi mật khẩu</a></li>
                             <li class="pt-2"><a href="{% url 'app_user:logout' %}"><i
                                         class="fas fa-sign-out-alt mr-2"></i>Đăng Xuất</a></li>
                         </ul>
@@ -125,7 +126,7 @@
                                         </div>
 
                                     </form>
-                                </div> 
+                                </div>
                                 <!-- Change Password -->
                                 <div id="change_password" class="tab-pane fade">
                                     <h4> Thay Đổi Mật Khẩu</h4>
@@ -136,19 +137,18 @@
 
                                             <div class="col-md-12 pb-2">
                                                 <label>Nhập mật khẩu cũ</label>
-                                                <input class="form-control" type="password"  name="current_password">
+                                                <input class="form-control" type="password" name="current_password">
                                             </div>
 
 
                                             <div class="col-md-12 pb-2">
                                                 <label>Nhập mật khẩu mới</label>
-                                                <input class="form-control" type="password"  name="new_password">
+                                                <input class="form-control" type="password" name="new_password">
                                             </div>
 
                                             <div class="col-md-12 pb-2">
                                                 <label>Nhập lại mật khẩu mới</label>
-                                                <input class="form-control" type="password" 
-                                                    name="confirm_password">
+                                                <input class="form-control" type="password" name="confirm_password">
                                             </div>
 
 
@@ -258,10 +258,13 @@
                                                                 {{booking.tour.departure_date|date:"d-m-Y"}}</h5>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <button style="background-color: white;color:darkgoldenrod; font-weight: bold;" type="button" class="btn btn-secondary"
-                                                            data-toggle="modal" data-target="#booking_{{booking.id}}">
-                                                            Đã Hoàn Tất
-                                                        </button>
+                                                            <button
+                                                                style="background-color: white;color:darkgoldenrod; font-weight: bold;"
+                                                                type="button" class="btn btn-secondary"
+                                                                data-toggle="modal"
+                                                                data-target="#booking_{{booking.id}}">
+                                                                Đã Hoàn Tất
+                                                            </button>
                                                         </div>
 
                                                     </div>
@@ -337,7 +340,9 @@
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <div style="font-weight: bold;"><i class="fa fa-angle-right text-primary mr-2"></i>Hành
                             Khách</div>
-                        <span style="font-weight: bold; color:red"> {{booking.adult_total_price|add:booking.children_total_price|floatformat:0|intcomma}} </span>
+                        <span style="font-weight: bold; color:red">
+                            {{booking.adult_total_price|add:booking.children_total_price|floatformat:0|intcomma}}
+                        </span>
                     </li>
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <small class=" mr-2">Người lớn</small>
@@ -356,10 +361,7 @@
                             Giá</div>
                         <span style="font-weight: bold;color:red">{{booking.discount}}</span>
                     </li>
-                    <li class="mb-3 d-flex justify-content-between align-items-center">
-                        <small class=" mr-2">voucher</small>
-                        <small style="font-weight: bold;">0</small>
-                    </li>
+
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <div>
                             <h5 style="font-weight: bold;">Tổng Tiền</h5>
@@ -390,7 +392,9 @@
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <div style="font-weight: bold;"><i class="fa fa-angle-right text-primary mr-2"></i>Hành
                             Khách</div>
-                        <span style="font-weight: bold; color:red"> {{booking.adult_total_price|add:booking.children_total_price|floatformat:0|intcomma}} </span>
+                        <span style="font-weight: bold; color:red">
+                            {{booking.adult_total_price|add:booking.children_total_price|floatformat:0|intcomma}}
+                        </span>
                     </li>
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <small class=" mr-2">Người lớn</small>
@@ -400,10 +404,10 @@
                     {% if booking.children_quantity > 0 %}
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <small class=" mr-2">Trẻ Em</small>
-                        
+
                         <small style="font-weight: bold;">{{booking.children_quantity}} x
                             {{booking.tour.children_price|floatformat:0|intcomma}}</small>
-                        
+
                     </li>
                     {% endif %}
                     <li class="mb-3 d-flex justify-content-between align-items-center">
@@ -411,10 +415,7 @@
                             Giá</div>
                         <span style="font-weight: bold;color:red">{{booking.discount}}%</span>
                     </li>
-                    <li class="mb-3 d-flex justify-content-between align-items-center">
-                        <small class=" mr-2">voucher</small>
-                        <small style="font-weight: bold;">0</small>
-                    </li>
+
                     <li class="mb-3 d-flex justify-content-between align-items-center">
                         <div>
                             <h5 style="font-weight: bold;">Tổng Tiền</h5>
@@ -425,7 +426,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'app_user:export_payment_to_pdf' booking.pk  %}'">Tải PDF</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="window.location.href='{% url 'app_user:export_payment_to_pdf' booking.pk  %}'">Tải
+                    PDF</button>
             </div>
         </div>
     </div>

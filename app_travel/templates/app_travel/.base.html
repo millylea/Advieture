@@ -93,8 +93,9 @@
                         <a href="{% url 'app_user:login' %}" class="nav-item nav-link">Đăng Nhập</a>
                         {% else %}
                         <div class="nav-item dropdown">
-                            <a href="{% url 'app_user:my_account' %}" class="nav-link dropdown-toggle" data-toggle="dropdown"><i
-                                    class="fas fa-user mr-1"></i> {{user.last_name}} {{user.first_name}}
+                            <a href="{% url 'app_user:my_account' %}" class="nav-link dropdown-toggle"
+                                data-toggle="dropdown"><i class="fas fa-user mr-1"></i> {{user.last_name}}
+                                {{user.first_name}}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="{% url 'app_user:my_account' %}" class="dropdown-item">Tài khoản của tôi</a>
@@ -140,8 +141,10 @@
             <div class="col-lg-3 col-md-6 mb-5">
                 <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Thông Tin</h5>
                 <div class="d-flex flex-column justify-content-start">
-                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Trang Chủ</a>
-                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Liên Hệ</a>
+                    <a class="text-white-50 mb-2" href="{% url 'app_travel:index' %}"><i
+                            class="fa fa-angle-right mr-2"></i>Trang Chủ</a>
+                    <a class="text-white-50 mb-2" href="{% url 'app_travel:contact' %}"><i
+                            class="fa fa-angle-right mr-2"></i>Liên Hệ</a>
                     <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Ưu Dãi</a>
                 </div>
             </div>
