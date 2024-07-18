@@ -6,7 +6,7 @@ from app_booking.views import *
 
 app_name = "app_booking"
 urlpatterns = [
-    path("dat-tour/<int:tour_id>/", tour_booking, name="tour_booking"),
-    path("tien-hanh-dat/<int:booking_id>/", checkout, name="checkout"),
+    path("dat-tour/<int:tour_id>", tour_booking, name="tour_booking"),
+    path("tien-hanh-dat/<int:booking_id>", checkout, name="checkout"),
    
 ]
