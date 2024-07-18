@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import EmailMessage
@@ -142,8 +143,7 @@ def search(request):
         category_name = f"Tìm thấy {count} tour"
     else:
         category_name = "Không tìm thấy tour nào"
-    
-    
+
     return render(
         request,
         "app_travel/tours_list.html",
@@ -159,6 +159,7 @@ def search(request):
     )
 
 
+@csrf_exempt
 def contact(request):
     categories = Category.objects.all()
     result_contact = ""
@@ -183,19 +184,19 @@ def contact(request):
              </div> """
 
         # Automatic Email
-        sender = settings.EMAIL_HOST_USER
-        recipients = [email, sender]
-        title = f"[Feedback] {subject}"
-        content = "<p> Chào bạn <strong>" + name + "</strong>,"
-        content += (
-            "<p> Advieture đã nhận được thông tin liên hệ của bạn với tiêu đề: </p>"
-        )
-        content += "<p>" + subject + "</p>"
-        content += "<p>Chúng tôi sẽ phản hồi lại bạn trong thời gian sớm nhất.</p>"
-        content += "<p>Cảm ơn bạn đã liên hệ</p>"
-        msg = EmailMessage(title, content, sender, recipients)
-        msg.content_subtype = "html"
-        msg.send()
+        # sender = settings.EMAIL_HOST_USER
+        # recipients = [email, sender]
+        # title = f"[Feedback] {subject}"
+        # content = "<p> Chào bạn <strong>" + name + "</strong>,"
+        # content += (
+        #     "<p> Advieture đã nhận được thông tin liên hệ của bạn với tiêu đề: </p>"
+        # )
+        # content += "<p>" + subject + "</p>"
+        # content += "<p>Chúng tôi sẽ phản hồi lại bạn trong thời gian sớm nhất.</p>"
+        # content += "<p>Cảm ơn bạn đã liên hệ</p>"
+        # msg = EmailMessage(title, content, sender, recipients)
+        # msg.content_subtype = "html"
+        # msg.send()
 
     return render(
         request,

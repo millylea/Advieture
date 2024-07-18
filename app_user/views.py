@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
 from django.template.loader import render_to_string
@@ -17,6 +18,7 @@ hasher = PBKDF2PasswordHasher()
 
 
 # Create your views here.
+@csrf_exempt
 def register(request):
     if "s_user" in request.session:
         return redirect("app_travel:index")
@@ -70,6 +72,7 @@ def register(request):
                 <div class="alert alert-danger" role="alert">
                         Thông tin có lỗi, vui lòng nhập lại!
                 </div> """
+
     return render(
         request,
         "app_travel/register.html",
@@ -81,6 +84,7 @@ def register(request):
     )
 
 
+@csrf_exempt
 def login(request):
     categories = Category.objects.all()
     result_login = ""
@@ -115,13 +119,13 @@ def logout(request):
         return redirect("app_user:login")
 
 
+@csrf_exempt
 def my_account(request):
     categories = Category.objects.all()
-    dict_user = request.session["s_user"]
-    user = User.objects.get(pk=request.session["s_user"]["id"])
-
     if not "s_user" in request.session:
-        return redirect("app_travel:login")
+        return redirect("app_user:login")
+    dict_user = request.session.get("s_user")
+    user = User.objects.get(pk=request.session["s_user"]["id"])
 
     # update
     result_update = ""

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.core.mail import EmailMessage
+from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from app_travel.models import Category, Tour, Contact, Departure
 from app_user.models import User
@@ -9,6 +10,7 @@ from app_booking.models import Booking, BookingStatus, Passenger
 from app_user.views import *
 
 
+@csrf_exempt
 def tour_booking(request, tour_id):
     categories = Category.objects.all()
     tour_detail = Tour.objects.get(id=tour_id)
@@ -33,7 +35,7 @@ def tour_booking(request, tour_id):
             return render(
                 request, "app_travel/booking.html", {"error": f"{err}"}, status=400
             )
-        
+
         booking = Booking(
             user=user,
             tour=tour_detail,
@@ -60,7 +62,7 @@ def tour_booking(request, tour_id):
         {"categories": categories, "tour_detail": tour_detail},
     )
 
-
+@csrf_exempt
 def checkout(request, booking_id):
     booking = Booking.objects.get(id=booking_id)
     passenger_price = booking.adult_total_price + booking.children_total_price
