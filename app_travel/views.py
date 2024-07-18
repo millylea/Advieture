@@ -184,19 +184,19 @@ def contact(request):
              </div> """
 
         # Automatic Email
-        # sender = settings.EMAIL_HOST_USER
-        # recipients = [email, sender]
-        # title = f"[Feedback] {subject}"
-        # content = "<p> Chào bạn <strong>" + name + "</strong>,"
-        # content += (
-        #     "<p> Advieture đã nhận được thông tin liên hệ của bạn với tiêu đề: </p>"
-        # )
-        # content += "<p>" + subject + "</p>"
-        # content += "<p>Chúng tôi sẽ phản hồi lại bạn trong thời gian sớm nhất.</p>"
-        # content += "<p>Cảm ơn bạn đã liên hệ</p>"
-        # msg = EmailMessage(title, content, sender, recipients)
-        # msg.content_subtype = "html"
-        # msg.send()
+        sender = settings.EMAIL_HOST_USER
+        recipients = [email, sender]
+        title = f"[Feedback] {subject}"
+        content = "<p> Chào bạn <strong>" + name + "</strong>,"
+        content += (
+            "<p> Advieture đã nhận được thông tin liên hệ của bạn với tiêu đề: </p>"
+        )
+        content += "<p>" + subject + "</p>"
+        content += "<p>Chúng tôi sẽ phản hồi lại bạn trong thời gian sớm nhất.</p>"
+        content += "<p>Cảm ơn bạn đã liên hệ</p>"
+        msg = EmailMessage(title, content, sender, recipients)
+        msg.content_subtype = "html"
+        msg.send()
 
     return render(
         request,
