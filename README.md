@@ -19,9 +19,16 @@ A booking travel website made with Django and Python and Intergration Automation
 
 2. Karate Automation Test.
    
-   To run this test, use Git Bash if you are curently use Powershell.
+   To run this test, use Git Bash if you are curently using Powershell.
    
    The command lines are noted in "command.md".
+
+   To run a whole test: run "mvn test"
    
-   To run a certain scenario, which is recommended, put a tag "@debug" before one.
+   To run a certain scenario, which is recommended, put a tag "@debug" before one and run the command line containing the tag.
+
+   Reports are automaticly generated in "target" folder after each test run.
+
+   
+   
    
