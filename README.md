@@ -20,6 +20,8 @@ A booking travel website made with Django and Python and Intergration Automation
 2. Karate Automation Test.
    
    To run this test, use Git Bash if you are curently use Powershell.
+   
    The command lines are noted in "command.md".
+   
    To run a certain scenario, which is recommended, put a tag "@debug" before one.
    
