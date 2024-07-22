@@ -1,7 +1,7 @@
 # Advieture
 
 A booking travel website made with Django and Python and Intergration Automation Test
-1. Web pages
+## 1. Web pages
 
 
 ![Screenshot 2024-07-19 084406](https://github.com/user-attachments/assets/c0ba57f9-be4c-4f87-a2fa-0e38eb409b4a)
@@ -17,19 +17,32 @@ A booking travel website made with Django and Python and Intergration Automation
 ![Screenshot 2024-07-19 085110](https://github.com/user-attachments/assets/89f5ce88-a11c-4fe8-aa20-2e83921c3885)
 ![Screenshot 2024-07-19 085137](https://github.com/user-attachments/assets/df071b98-210b-4d02-a633-e110844e9067)
 
-2. Karate Automation Test.
+## 2. Karate Automation Test.
 
    To run this test, you must have [Karate set up](https://github.com/karatelabs/karate?tab=readme-ov-file#quickstart)
 
    Use Git Bash if you are curently using Powershell.
    
-   The command lines are noted in "command.md".
+   ### Command lines:
+- To run whole test:
+  ```
+  mvn test
+  ```
+- To run a certain feature or scenario, put a @debug tag before it:
+  ```
+  mvn test -Dkarate.options="--tags @debug"
+  ```
+- To run a whole test but skip a certain feature or scenario, put a @skipme tag before it:
+  ```
+  mvn test -Dkarate.options="--tags ~~@skipme"
+  ```
+   Reports are automaticly generated in "target/karate-report" and "target/cucumber-html" folder after each test run.
+  
+  ![Screenshot 2024-07-22 092513](https://github.com/user-attachments/assets/6c59508a-a0bd-4f8b-9a82-c0a55bd1f0fe)
 
-   To run a whole test: run "mvn test"
-   
-   To run a certain scenario, which is recommended, put a tag "@debug" before one and run the command line containing the tag.
+  ![Screenshot 2024-07-22 093830](https://github.com/user-attachments/assets/cf88b2af-976e-4ca9-9f12-7f835835f229)
 
-   Reports are automaticly generated in "target" folder after each test run.
+
 
    
    
