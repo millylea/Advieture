@@ -18,8 +18,10 @@ A booking travel website made with Django and Python and Intergration Automation
 ![Screenshot 2024-07-19 085137](https://github.com/user-attachments/assets/df071b98-210b-4d02-a633-e110844e9067)
 
 2. Karate Automation Test.
-   
-   To run this test, use Git Bash if you are curently using Powershell.
+
+   To run this test, you must have [Karate set up](https://github.com/karatelabs/karate?tab=readme-ov-file#quickstart)
+
+   Use Git Bash if you are curently using Powershell.
    
    The command lines are noted in "command.md".
 
