@@ -217,8 +217,16 @@
 
                     <div class="affordable-price-title">Giá chỉ từ </div>
                     <div class="affordable-price">{{tour.price|floatformat:0|intcomma}}<span>đ</span></div>
-                    <div class="booking-button"><a href="{% url 'app_booking:tour_booking' tour.pk %}"><button
-                                class="btn" type="submit" name="btnBookNow" value="Đặt Ngay"> Đặt Ngay</button></a>
+                    <div class="booking-button">
+                        {% with user=request.session.s_user %}
+                        {% if not user %}
+                        <a href="{% url 'app_user:login' %}"><button>Đặt Ngay</button></a>
+                        {% else %}
+                        <a href="{% url 'app_booking:tour_booking' tour.pk %}"> <button>Đặt
+                                Ngay</button></a>
+                    
+                        {% endif %}
+                        {% endwith %}
                     </div>
 
                 </div>

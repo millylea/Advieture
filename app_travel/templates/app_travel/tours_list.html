@@ -96,8 +96,15 @@
 
                                         </div>
                                         <div class="booking-button">
-                                            <a href="{% url 'app_booking:tour_booking' tour.pk %}"> <button>Đặt
-                                                    Ngay</button></a>
+                                            
+                                            {% with user=request.session.s_user %}
+                                            {% if not user %}
+                                            <a href="{% url 'app_user:login' %}"><button>Đặt Ngay</button></a>
+                                            {% else %}
+                                            <a href="{% url 'app_booking:tour_booking' tour.pk %}"> <button>Đặt Ngay</button></a>
+                                            {% endif %}
+                                            {% endwith %}
+                                            
                                         </div>
                                     </div>
                                 </div>
